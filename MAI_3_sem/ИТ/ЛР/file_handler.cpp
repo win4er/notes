@@ -5,7 +5,7 @@
 // a не после заполнения остальных полей
 // + уменьшить код и избавиться от ненужных штук
 
-bool validate_car_data(CarData info) {
+int validate_car_data(CarData info) {
     bool result = true;
     int sep_pos=6;
     if (info.license.size() < sep_pos) {
@@ -30,8 +30,8 @@ bool validate_car_data(CarData info) {
     return result;
 }
 
-bool validate_license_data(LicenseData info) {
-    bool result = true;
+int validate_license_data(LicenseData info) {
+    int result = 0;
     if (info.license.size() < 6) {
         printf("Неправильный формат номерного знака, длина строки меньше 6\n");
         return false;
@@ -128,6 +128,7 @@ void make_file_car_data() {
     while (scanf("%32[^\n]s", buffer) != EOF) {
         if ((buffer[0]=='Q' || buffer[0] == 'q') && buffer[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", buffer);
+            fseek(stdin, 0, SEEK_END);
             break;
         }
         // to skip the rest of the input
@@ -221,6 +222,7 @@ void make_file_license_data() {
     while (scanf("%32[^\n]s", buffer) != EOF) {
         if ((buffer[0]=='Q' || buffer[0] == 'q') && buffer[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", buffer);
+            fseek(stdin, 0, SEEK_END);
             break;
         }
         // to skip the rest of the input
@@ -290,7 +292,6 @@ void UI() {
             printf("Введенный символ не подходит. Можно ввести только 1 или 2.");
             printf("Что требуется записать?\n1)Файл автомобильных сведений\n2)Файл регистрационных сведений\n");
         }
-    
     }
     printf("Нажмите любую клавишу для завершения программы...\n");
     scanf("%c", &input);

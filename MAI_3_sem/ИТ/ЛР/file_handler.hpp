@@ -20,8 +20,8 @@ struct LicenseData {
     std::string release_year;
 };
 
-bool validate_car_data(CarData info);
-bool validate_license_data(LicenseData info);
+int validate_car_data(CarData info);
+int validate_license_data(LicenseData info);
 
 void make_file_car_data();
 void make_file_license_data();
