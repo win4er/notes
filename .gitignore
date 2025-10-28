@@ -1,1 +1,4 @@
 .stfolder
+*.o
+*.out
+*.exe
