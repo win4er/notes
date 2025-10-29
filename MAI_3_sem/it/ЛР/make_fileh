@@ -1,0 +1,8 @@
+all: main.o file_handler.o
+	g++ -g main.o file_handler.o -o file_h
+main.o: main.cpp
+	g++ -g -c main.cpp
+file_handler.o: file_handler.cpp
+	g++ -c file_handler.cpp
+clean:
+	rm *.o *.out *.exe *.txt
