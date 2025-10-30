@@ -1,4 +1,7 @@
 .stfolder
+.stignore
+.vscode
 *.o
 *.out
 *.exe
+*.concepts
