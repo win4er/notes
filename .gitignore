@@ -4,4 +4,5 @@
 *.o
 *.out
 *.exe
+*.txt
 *.concepts
