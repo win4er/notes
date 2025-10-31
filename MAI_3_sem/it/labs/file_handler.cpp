@@ -1,299 +1,265 @@
 #include "file_handler.hpp"
 
-// TODO: 
-// + РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РґРѕР»Р¶РµРЅ РёРјРµС‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РёР·РјРµРЅРёС‚СЊ РІРІРµРґРµРЅРЅРѕРµ РїРѕР»Рµ СЃСЂР°Р·Сѓ РїРѕСЃР»Рµ СЃРѕРІРµСЂС€РµРЅРёСЏ РѕС€РёР±РєРё,
-// a РЅРµ РїРѕСЃР»Рµ Р·Р°РїРѕР»РЅРµРЅРёСЏ РѕСЃС‚Р°Р»СЊРЅС‹С… РїРѕР»РµР№
-// + СѓРјРµРЅСЊС€РёС‚СЊ РєРѕРґ Рё РёР·Р±Р°РІРёС‚СЊСЃСЏ РѕС‚ РЅРµРЅСѓР¶РЅС‹С… С€С‚СѓРє
+std::string DEFAULT_FILENAME_1 = "car_data.txt";
+std::string DEFAULT_FILENAME_2 = "license_data.txt";
 
-int validate_car_data(CarData info) {
-    bool result = true;
-    int sep_pos=6;
-    if (info.license.size() < sep_pos) {
-        printf("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚ РЅРѕРјРµСЂРЅРѕРіРѕ Р·РЅР°РєР°, РґР»РёРЅР° СЃС‚СЂРѕРєРё РјРµРЅСЊС€Рµ 6\n");
-        return false;
-    }
-    std::string left_side = info.license.substr(0, sep_pos);
-    std::string right_side = info.license.substr(sep_pos, info.license.size()-sep_pos);
-    // РїСЂРµРґСЃС‚Р°РІРёС‚РµР»СЊ Р Р¤
-    // M976MM777RUS
-    std::regex regular_l_pattern{
-        "[ABEKMHOPCTYX][0-9]{3,3}[ABEKMHOPCTYX]{2,2}"
-    };
-    std::regex regular_r_pattern{
-        "[0-9]{2,3}RUS"
-    };
-    bool condition = regex_match(left_side, regular_l_pattern) && regex_match(right_side, regular_r_pattern);
-    if (!condition) {
-        printf("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚ РЅРѕРјРµСЂРЅРѕРіРѕ Р·РЅР°РєР°\n");
-        result = false;
-    }    
-    return result;
+char BUFFER[256];
+
+bool validate_filename(std::string filename) {
+    std::regex regex_filename{"[a-zA-Z0-9_-]+\\.txt"};
+    return std::regex_match(filename, regex_filename);
 }
 
-int validate_license_data(LicenseData info) {
-    int result = 0;
-    if (info.license.size() < 6) {
-        printf("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚ РЅРѕРјРµСЂРЅРѕРіРѕ Р·РЅР°РєР°, РґР»РёРЅР° СЃС‚СЂРѕРєРё РјРµРЅСЊС€Рµ 6\n");
-        return false;
-    }
-    std::string left_side = info.license.substr(0, 6);
-    std::string right_side = info.license.substr(6, info.license.size()-6);
+bool validate_license(std::string license) {
+    // M976MM777RUS
+    std::regex pattern{"[ABEKMHOPCTYX][0-9]{3,3}[ABEKMHOPCTYX]{2,2}[0-9]{2,3}RUS"};
+    return regex_match(license, pattern);
+}
 
-    std::regex regular_l_pattern{
-        "[ABEKMHOPCTYX][0-9]{3,3}[ABEKMHOPCTYX]{2,2}"
-    };
-    std::regex regular_r_pattern{
-        "[0-9]{2,3}RUS"
-    };
+bool validate_brand(std::string brand) {
+    std::regex pattern{"[А-ЯЁа-яёA-Za-z0-9-_.! ]+"};
+    return regex_match(brand, pattern);
+}
 
-    bool condition = regex_match(left_side, regular_l_pattern) && regex_match(right_side, regular_r_pattern);
-    if (!condition) {
-        printf("РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚ РЅРѕРјРµСЂРЅРѕРіРѕ Р·РЅР°РєР°\n");
-        result = false;
-    }
+bool validate_model(std::string model) {
+    std::regex pattern{"[А-ЯЁа-яёA-Za-z0-9-_.!() ]+"};
+    return regex_match(model, pattern);
+}
+
+bool validate_surname(std::string surname) {
+    std::regex pattern{"[А-ЯЁа-яёA-Za-z]+"};
+    return regex_match(surname, pattern);
+}
+
+bool validate_address(std::string address) {
+    std::regex address_pattern{"[A-Za-zА-ЯЁа-яё0-9!_-. ]+"};
+    return regex_match(address, address_pattern);
+}
+
+bool validate_release_year(std::string release_year) {
+    bool result=true;
     int year=0;
-    for (int i=0; i<info.release_year.size(); ++i) {
-        if (!isdigit(info.release_year[i])) {
-            printf("Р“РѕРґ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕР»СЊРєРѕ С†РёС„СЂС‹\n");
+    for (int i=0; i<release_year.size(); ++i) {
+        if (!isdigit(release_year[i])) {
+            printf("Год должен содержать только цифры\n");
             result = false;
             break;
         } else {
             year *= 10;
-            year += (info.release_year[i]-'0');
+            year += (release_year[i]-'0');
         }
     }
     std::time_t t = std::time(nullptr);
     std::tm *const pTInfo = std::localtime(&t);
     int current_year = 1900 + pTInfo->tm_year;
     if (!(year >= 1886 && year <= current_year)) {
-        printf("Р“РѕРґ РІРЅРµ РґРёР°РїР°Р·РѕРЅР°\n");
+        printf("Год вне диапазона\n");
         result = false;
     }
     return result;
 }
 
-void make_file_car_data() {
-    std::string file_name, default_file_name = "car_data.txt";
-    FILE* file;
-    bool exist;
-    printf("Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ С„Р°Р№Р»Р°(enter=%s):\n", default_file_name.c_str());
-    while (scanf("%64[^\n]s", &file_name[0])) {
+std::pair<std::string, std::string> file_info(std::string default_file_name) {
+    std::pair<std::string, std::string> file_info;
+    std::string file_name;
+    printf("Введите название файла(enter=%s): ", default_file_name.c_str());
+    while (scanf("%255[^\n]s", BUFFER)) {
         fseek(stdin, 0, SEEK_END);
-        exist = std::filesystem::exists(file_name);
-        if (!exist) {
-            file = std::fopen(file_name.c_str(), "w");
-            if (file) {
-                fclose(file);
-                remove(file_name.c_str());
-                break;
-            }
-        } else break;
-        printf("Р’РІРµРґРµРЅРЅРѕРµ РёРјСЏ С„Р°Р№Р»Р° РЅРµРєРєРѕСЂРµРєС‚РЅРѕ, РІРІРµРґРёС‚Рµ РґСЂСѓРіРѕРµ\n");
+        file_name = BUFFER;
+        if (validate_filename(file_name)) {
+            break;
+        }
+        else {
+            printf("Введенное имя файла некорректно. Файл должен иметь вид file.txt, \n");
+            printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
+            printf("а, после следует его расширение .txt");
+            printf("Введите название файла(enter=%s): ", default_file_name.c_str());
+        }
     }
     fseek(stdin, 0, SEEK_END);
     if (file_name.size()==0) {
         file_name = default_file_name;
     }
-    exist = std::filesystem::exists(file_name);
-    if (exist) {
-        printf("Р¤Р°Р№Р» %s СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚. Р–РµР»Р°РµС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ Р·Р°РїРёСЃСЊ РІРјРµСЃС‚Рѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ СЃ РЅР°С‡Р°Р»Р°? (Y/N)\n", file_name.c_str());
+    file_info.first = file_name;
+    if (std::filesystem::exists(file_name)) {
+        printf("Файл %s уже существует. Желаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)? ", file_name.c_str());
         char option;
         while (option = getchar()) {
             fseek(stdin, 0, SEEK_END);
-            if (option == 'Y' || option == 'y') {
-                file = std::fopen(file_name.c_str(), "a");        
+            if (option == '\n') {
+                file_info.second = "a";
                 break;
             } else
             if (option == 'N' || option == 'n') {
-                file = std::fopen(file_name.c_str(), "w");
+                file_info.second = "w";
                 break;
-            } else printf("Р’РІРµРґРµРЅРѕ %s РјРѕР¶РЅРѕ РІРІРµСЃС‚Рё С‚РѕР»СЊРєРѕ Y РёР»Рё N\n");
+            } else printf("Введено %s можно ввести только enter или N\n");
         }
-    } else file = std::fopen(file_name.c_str(), "w");   
+    } else file_info.second = "w";
+    return file_info;
+}
+
+void write_car_data() {
+    std::pair<std::string, std::string> file_information = file_info(DEFAULT_FILENAME_1);
+    std::string file_name = file_information.first;
+    FILE* file = std::fopen(file_name.c_str(), file_information.second.c_str());
+     
     if (!file) {
-        printf("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» '%s'\n", file_name.c_str());
+        printf("Не удалось открыть файл %s\n", file_name.c_str());
         return;
     }
-    printf("Р¤Р°Р№Р» %s СѓСЃРїРµС€РЅРѕ РѕС‚РєСЂС‹С‚ РґР»СЏ Р·Р°РїРёСЃРё\n", file_name.c_str());
+    printf("Файл %s успешно открыт для записи\n", file_name.c_str());
 
-    char buffer[32+1];
-    int field=1;
+    int field_index=0;
     CarData temp = {};
-    printf("РќР°С‡РёРЅР°РµРј Р·Р°РїРѕР»РЅСЏС‚СЊ Р°РІС‚РѕРјРѕР±РёР»СЊРЅС‹Рµ СЃРІРµРґРµРЅРёСЏ.\nР”Р»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РІРІРѕРґР° РЅР°Р¶РјРёС‚Рµ 'Q' Р»РёР±Рѕ 'q'.\n");
-    printf("РџРѕР»СЏ РёРґСѓС‚ РІ Р·Р°РґР°РЅРЅРѕРј РїРѕСЂСЏРґРєРµ:\n");
-    printf("РџРѕР»Рµ #1: [Р±СЂРµРЅРґ]\nРџРѕР»Рµ #2: [РјРѕРґРµР»СЊ]\nРџРѕР»Рµ #3: [РЅРѕРјРµСЂРЅРѕР№ Р·РЅР°Рє]\n");
-    printf("Р’РІРµРґРёС‚Рµ РїРѕР»Рµ #%d:\n", field);
+    printf("Начинаем заполнять автомобильные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
+    std::string field_names[3] = {"бренд", "модель", "номерной знак"};
+    printf("Введите поле %s:\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
-    while (scanf("%32[^\n]s", buffer) != EOF) {
-        if ((buffer[0]=='Q' || buffer[0] == 'q') && buffer[1] == '\0') {
-            printf("Р’РІРµРґРµРЅ %s. Р’РІРѕРґ СЃРІРµРґРµРЅРёР№ Р·Р°РєРѕРЅС‡РµРЅ\n", buffer);
+    while (scanf("%32[^\n]s", BUFFER) != EOF) {
+        if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
+            printf("Введен %s. Ввод сведений закончен\n", BUFFER);
             fseek(stdin, 0, SEEK_END);
             break;
         }
         // to skip the rest of the input
         fseek(stdin, 0, SEEK_END);
-        switch (field) {
-            case 1: {temp.brand.assign(buffer); break;}
-            case 2: {temp.model.assign(buffer); break;}
-            case 3: {temp.license.assign(buffer); filled = true; break;}
-            field = (field+1)%3;
+        switch (field_index) {
+            case 0: {
+                temp.brand.assign(BUFFER);
+                if (validate_brand(temp.brand))
+                    field_index=(field_index+1)%3;
+                break;
+            }
+            case 1: {
+                temp.model.assign(BUFFER);
+                if (validate_model(temp.model))
+                    field_index=(field_index+1)%3;
+                break;
+            }
+            case 2: {
+                temp.license.assign(BUFFER);
+                if (validate_license(temp.license)) {
+                    field_index = (field_index+1)%3;
+                    filled = true;
+                }
+                break;
+            }
         }
         if (filled) {
-            if (!validate_car_data(temp)) {
-                printf("Р—Р°РїРёСЃСЊ СЃРѕРґРµСЂР¶РёС‚ РѕС€РёР±РєРё, РёСЃРїСЂР°РІСЊС‚Рµ СЃРѕРґРµСЂР¶РёРјРѕРµ.\n");
-            } else {
-                fwrite(temp.brand.c_str(), 1, temp.brand.size(), file);
-                fputc(' ', file);
-                fwrite(temp.model.c_str(), 1, temp.model.size(), file);
-                fputc(' ', file);
-                fwrite(temp.license.c_str(), 1, temp.license.size(), file);
-                fputc('\n', file);
-                printf("Р—Р°РїРёСЃСЊ #%d Р·Р°РІРµСЂС€РµРЅР°:\nР±СЂРµРЅРґ: '%s'\nРјРѕРґРµР»СЊ: '%s'\nРЅРѕРјРµСЂРЅРѕР№ Р·РЅР°Рє: '%s'\n", ++note_number, temp.brand.c_str(), temp.model.c_str(), temp.license.c_str());    
-            }
-            printf("РџСЂРѕРґРѕР»Р¶Р°РµРј Р·Р°РїРёСЃСЊ СЃРІРµРґРµРЅРёР№\n");
+            fwrite(temp.brand.c_str(), 1, temp.brand.size(), file);
+            fputc(' ', file);
+            fwrite(temp.model.c_str(), 1, temp.model.size(), file);
+            fputc(' ', file);
+            fwrite(temp.license.c_str(), 1, temp.license.size(), file);
+            fputc('\n', file);
+            printf(
+                "Запись #%d завершена:\nбренд: %s\nмодель: %s\nномерной знак: %s\n",
+                ++note_number,
+                temp.brand.c_str(),
+                temp.model.c_str(),
+                temp.license.c_str()
+            );
+            printf("Продолжаем запись сведений\n");
             temp = {};
             filled = false;
         }
-        printf("Р’РІРµРґРёС‚Рµ РїРѕР»Рµ #%d:\n", field);
+        printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
     fclose(file);
-    if (!file) printf("РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РєСЂС‹С‚СЊ С„Р°Р№Р»: %s\n", file_name.c_str());
-    else printf("Р¤Р°Р№Р» %s СѓСЃРїРµС€РЅРѕ Р·Р°РєСЂС‹С‚\n", file_name.c_str());
+    if (file) printf("Не удалось закрыть файл: %s\n", file_name.c_str());
+    else printf("Файл %s успешно закрыт\n", file_name.c_str());
     // clear stdin to ignore EOF
     clearerr(stdin);
     return;
 }
 
-void make_file_license_data() {
-    std::string file_name, default_file_name = "license_data.txt";
-    FILE* file;
-    printf("Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ С„Р°Р№Р»Р°(enter=%s):\n", default_file_name.c_str());
-    while (scanf("%64[^\n]s", &file_name[0])) {
-        fseek(stdin, 0, SEEK_END);
-        file = std::fopen(file_name.c_str(), "a");
-        if (file) {
-            fclose(file);
-            remove(file_name.c_str());
-            break;
-        }
-        printf("Р’РІРµРґРµРЅРЅРѕРµ РёРјСЏ С„Р°Р№Р»Р° РЅРµРєРєРѕСЂРµРєС‚РЅРѕ, РІРІРµРґРёС‚Рµ РґСЂСѓРіРѕРµ\n");
-    }
-    fseek(stdin, 0, SEEK_END);
-    if (file_name.size()==0) {
-        file_name = default_file_name;
-    }
-    bool exist = std::filesystem::exists(file_name);
-    if (exist) {
-        printf("Р¤Р°Р№Р» %s СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚. Р–РµР»Р°РµС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ Р·Р°РїРёСЃСЊ РІРјРµСЃС‚Рѕ Р·Р°РїРѕР»РЅРµРЅРёСЏ СЃ РЅР°С‡Р°Р»Р°? (Y/N)\n", file_name.c_str());
-        char option;
-        while (option = getchar()) {
-            fseek(stdin, 0, SEEK_END);
-            if (option == 'Y' || option == 'y') {
-                file = std::fopen(file_name.c_str(), "a");
-                break;
-            } else
-            if (option == 'N' || option == 'n') {
-                file = std::fopen(file_name.c_str(), "w");
-                break;
-            } else {
-                printf("Р’РІРµРґРµРЅРѕ %s РјРѕР¶РЅРѕ РІРІРµСЃС‚Рё С‚РѕР»СЊРєРѕ 'Y' РёР»Рё 'N'\n");
-            }
-        }
-    } else {
-        file = std::fopen(file_name.c_str(), "w");        
-    }
+void write_license_data() {
+    std::pair<std::string, std::string> file_information = file_info(DEFAULT_FILENAME_2);
+    std::string file_name = file_information.first;
+    FILE* file = std::fopen(file_name.c_str(), file_information.second.c_str());
+    
     if (!file) {
-        printf("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» %s\n", file_name.c_str());
+        printf("Не удалось открыть файл %s\n", file_name.c_str());
         return;
     }
-    printf("Р¤Р°Р№Р» %s СѓСЃРїРµС€РЅРѕ РѕС‚РєСЂС‹С‚ РґР»СЏ Р·Р°РїРёСЃРё\n", file_name.c_str());
+    printf("Файл %s успешно открыт для записи\n", file_name.c_str());
 
-    char buffer[32+1];
-    int field=1;
+    int field_index=0;
     LicenseData temp = {};
 
-    printf("РќР°С‡РёРЅР°РµРј Р·Р°РїРѕР»РЅСЏС‚СЊ СЂРµРіРёСЃС‚СЂР°С†РёРѕРЅРЅС‹Рµ СЃРІРµРґРµРЅРёСЏ.\nР”Р»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РІРІРѕРґР° РЅР°Р¶РјРёС‚Рµ 'Q' Р»РёР±Рѕ 'q'.\n");
-    printf("РџРѕР»СЏ РёРґСѓС‚ РІ Р·Р°РґР°РЅРЅРѕРј РїРѕСЂСЏРґРєРµ:\n");
-    printf("РџРѕР»Рµ #1: [РЅРѕРјРµСЂРЅРѕР№ Р·РЅР°Рє]\nРџРѕР»Рµ #2: [С„Р°РјРёР»РёСЏ РІР»Р°РґРµР»СЊС†Р°]\nРџРѕР»Рµ #3: [Р°РґСЂРµСЃ РІР»Р°РґРµР»СЊС†Р°]\nРџРѕР»Рµ #4: [РіРѕРґ РІС‹РїСѓСЃРєР°]\n");
-    printf("Р’РІРµРґРёС‚Рµ РїРѕР»Рµ #%d:\n", field);
+    printf("Начинаем заполнять регистрационные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
+    std::string field_names[4] = {"номерной знак", "фамилия владельца", "адрес владельца", "год выпуска"};
+    printf("Введите поле '%s':\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
-    while (scanf("%32[^\n]s", buffer) != EOF) {
-        if ((buffer[0]=='Q' || buffer[0] == 'q') && buffer[1] == '\0') {
-            printf("Р’РІРµРґРµРЅ %s. Р’РІРѕРґ СЃРІРµРґРµРЅРёР№ Р·Р°РєРѕРЅС‡РµРЅ\n", buffer);
+    while (scanf("%32[^\n]s", BUFFER) != EOF) {
+        if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
+            printf("Введен %s. Ввод сведений закончен\n", BUFFER);
             fseek(stdin, 0, SEEK_END);
             break;
         }
         // to skip the rest of the input
         fseek(stdin, 0, SEEK_END);
-        switch (field) {
-            case 1: {temp.license.assign(buffer); break;}
-            case 2: {temp.surname.assign(buffer); break;}
-            case 3: {temp.address.assign(buffer); break;}
-            case 4: {temp.release_year.assign(buffer);filled = true;break;}
-            field = (field+1)%4;
+        switch (field_index) {
+            case 0: {
+                temp.license.assign(BUFFER);
+                if (validate_license(temp.license)) {
+                    field_index = (field_index+1)%4;
+                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                break;
+            }
+            case 1: {
+                temp.surname.assign(BUFFER);
+                if (validate_surname(temp.surname)) {
+                    field_index = (field_index+1)%4;
+                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                break;
+            }
+            case 2: {
+                temp.address.assign(BUFFER);
+                if (validate_address(temp.address)) {
+                    field_index = (field_index+1)%4;
+                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                break;
+            }
+            case 3: {
+                temp.release_year.assign(BUFFER);
+                if (validate_address(temp.release_year)) {
+                    field_index = (field_index+1)%4;
+                    filled = true;
+                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                break;
+            }
+
         }
         if (filled) {
-            if (!validate_license_data(temp)) {
-                printf("Р—Р°РїРёСЃСЊ СЃРѕРґРµСЂР¶РёС‚ РѕС€РёР±РєРё, РёСЃРїСЂР°РІСЊС‚Рµ СЃРѕРґРµСЂР¶РёРјРѕРµ.\n");
-            } else {
-                fwrite(temp.license.c_str(), 1, temp.license.size(), file);
-                fputc(' ', file);
-                fwrite(temp.surname.c_str(), 1, temp.surname.size(), file);
-                fputc(' ', file);
-                fwrite(temp.address.c_str(), 1, temp.address.size(), file);
-                fputc(' ', file);
-                fwrite(temp.release_year.c_str(), 1, temp.release_year.size(), file);
-                fputc('\n', file);
-                printf("Р—Р°РїРёСЃСЊ #%d Р·Р°РІРµСЂС€РµРЅР°:\nРЅРѕРјРµСЂРЅРѕР№ Р·РЅР°Рє: '%s'\nС„Р°РјРёР»РёСЏ РІР»Р°РґРµР»СЊС†Р°: '%s'\nР°РґСЂРµСЃ: '%s'\nРіРѕРґ РІС‹РїСѓСЃРєР°: '%s'\n", ++note_number, temp.license.c_str(), temp.surname.c_str(), temp.address.c_str(), temp.release_year.c_str());    
-            }
-            printf("РџСЂРѕРґРѕР»Р¶Р°РµРј Р·Р°РїРёСЃСЊ СЃРІРµРґРµРЅРёР№\n");
+            fwrite(temp.surname.c_str(), 1, temp.surname.size(), file);
+            fputc(' ', file);
+            fwrite(temp.address.c_str(), 1, temp.address.size(), file);
+            fputc(' ', file);
+            fwrite(temp.release_year.c_str(), 1, temp.release_year.size(), file);
+            fputc('\n', file);
+            printf(
+                "Запись #%d завершена:\nномерной знак: %s\nфамилия владельца: %s\nадрес: %s\nгод выпуска: %s\n",
+                ++note_number,
+                temp.license.c_str(),
+                temp.surname.c_str(),
+                temp.address.c_str(),
+                temp.release_year.c_str()
+            );
+        
+            printf("Продолжаем запись сведений\n");
             temp = {};
             filled = false;
         }
-        printf("Р’РІРµРґРёС‚Рµ РїРѕР»Рµ #%d:\n", field);
+        printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
-    if (!file) {
-        printf("РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РєСЂС‹С‚СЊ С„Р°Р№Р»: %s\n", file_name.c_str());
-    } else {
-        printf("Р¤Р°Р№Р» %s СѓСЃРїРµС€РЅРѕ Р·Р°РєСЂС‹С‚\n", file_name.c_str());
-    }
+    fclose(file);
+    if (file) printf("Не удалось закрыть файл: %s\n", file_name.c_str());
+    else printf("Файл %s успешно закрыт\n", file_name.c_str());
     // clear stdin to ignore EOF
     clearerr(stdin);
     return;
-}
-
-void program_info() {
-    printf("РќР°Р·РЅР°С‡РµРЅРёРµ РїСЂРѕРіСЂР°РјРјС‹: РЎРѕР·РґР°РЅРёРµ С„Р°Р№Р»РѕРІ РЅР° РѕСЃРЅРѕРІРµ СЃРІРµРґРµРЅРёР№, РІРІРѕРґРёРјС‹С… РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј\n"); 
-}
-
-void UI() {
-    printf("Р§С‚Рѕ С‚СЂРµР±СѓРµС‚СЃСЏ Р·Р°РїРёСЃР°С‚СЊ?\n1)Р¤Р°Р№Р» Р°РІС‚РѕРјРѕР±РёР»СЊРЅС‹С… СЃРІРµРґРµРЅРёР№\n2)Р¤Р°Р№Р» СЂРµРіРёСЃС‚СЂР°С†РёРѕРЅРЅС‹С… СЃРІРµРґРµРЅРёР№\n");
-    
-    char input='\0';
-    while (scanf("%c", &input) != EOF) {
-        printf("Р’РІРµРґРµРЅРѕ: %c\n", input);
-        fseek(stdin, 0, SEEK_END);
-        if (input == '1' || input == '2') {
-            if (input == '1') make_file_car_data();
-            else 
-            if (input == '2') make_file_license_data();
-            printf("Р–РµР»Р°РµС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ Р·Р°РїРёСЃСЊ? (Y/N)\n");
-            input = getchar();
-            fseek(stdin, 0, SEEK_END);
-            if (input == 'N' || input == 'n') {
-                break;
-            } else
-            if (input == 'Y' || input == 'y') {
-                printf("Р§С‚Рѕ С‚СЂРµР±СѓРµС‚СЃСЏ Р·Р°РїРёСЃР°С‚СЊ?\n1)Р¤Р°Р№Р» Р°РІС‚РѕРјРѕР±РёР»СЊРЅС‹С… СЃРІРµРґРµРЅРёР№\n2)Р¤Р°Р№Р» СЂРµРіРёСЃС‚СЂР°С†РёРѕРЅРЅС‹С… СЃРІРµРґРµРЅРёР№\n");
-            } else printf("Р’РІРµРґРµРЅ РЅРµРёР·РІРµСЃС‚РЅС‹Р№ СЃРёРјРІРѕР», РїСЂРѕРіСЂР°РјРјР° РїСЂРѕРґРѕР»Р¶Р°РµС‚ СЂР°Р±РѕС‚Сѓ.\n");
-        } else {
-            printf("Р’РІРµРґРµРЅРЅС‹Р№ СЃРёРјРІРѕР» РЅРµ РїРѕРґС…РѕРґРёС‚. РњРѕР¶РЅРѕ РІРІРµСЃС‚Рё С‚РѕР»СЊРєРѕ 1 РёР»Рё 2.");
-            printf("Р§С‚Рѕ С‚СЂРµР±СѓРµС‚СЃСЏ Р·Р°РїРёСЃР°С‚СЊ?\n1)Р¤Р°Р№Р» Р°РІС‚РѕРјРѕР±РёР»СЊРЅС‹С… СЃРІРµРґРµРЅРёР№\n2)Р¤Р°Р№Р» СЂРµРіРёСЃС‚СЂР°С†РёРѕРЅРЅС‹С… СЃРІРµРґРµРЅРёР№\n");
-        }
-    }
-    printf("РќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ Р·Р°РІРµСЂС€РµРЅРёСЏ РїСЂРѕРіСЂР°РјРјС‹...\n");
-    scanf("%c", &input);
-    printf("РџСЂРѕРіСЂР°РјРјР° Р·Р°РІРµСЂС€РµРЅР°\n");
 }

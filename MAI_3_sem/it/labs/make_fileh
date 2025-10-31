@@ -5,4 +5,4 @@ main.o: main.cpp
 file_handler.o: file_handler.cpp
 	g++ -c file_handler.cpp
 clean:
-	rm *.o *.out *.exe *.txt
+	rm -f *.o *.out *.exe *.txt

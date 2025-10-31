@@ -1,9 +1,9 @@
 #ifndef FILE_HANDLER_HPP
 #define FILE_HANDLER_HPP
+
 #include <cstdio>
 #include <string>
 #include <regex>
-#include <string.h>
 #include <cstdlib>
 #include <filesystem>
 
@@ -20,12 +20,16 @@ struct LicenseData {
     std::string release_year;
 };
 
-int validate_car_data(CarData info);
-int validate_license_data(LicenseData info);
+bool validate_filename(std::string filename);
+bool validate_license(std::string license);
+bool validate_brand(std::string brand);
+bool validate_model(std::string model);
+bool validate_surname(std::string surname);
+bool validate_address(std::string address);
+bool validate_release_year(std::string release_year);
 
-void make_file_car_data();
-void make_file_license_data();
+std::pair<std::string, std::string> file_info(std::string default_filename);
+void write_car_data();
+void write_license_data();
 
-void program_info();
-void UI();
 #endif
