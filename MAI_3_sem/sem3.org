@@ -1,0 +1,320 @@
+#+TITLE: MAI courses for 3 semestr
+#+AUTHOR: Platon
+
+* probability theory and mathematical statistics
+** properties
+*** teacher:
+
+    Naumov Andrey Viktorovich
+
+*** text-book:
+
+    [[file:probability_theory/Naumov.pdf]]
+    [[file:probability_theory/Kolmogorov.pdf]]
+
+** schedule
+*** TODO pt&ms lecture
+    DEADLINE: <2025-11-10 Mon 10:45-12:15> SCHEDULED: <2025-09-08 Mon 10:45-12:15 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-27 Mon 12:15]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-27 Mon 12:15]
+
+*** TODO pt&ms seminar
+    DEADLINE: <2025-12-17 Wed 13:00-14:30> SCHEDULED: <2025-09-24 Wed 13:00-14:30 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-22 Wed 13:00]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-22 Wed 13:00]
+
+** homework
+*** TODO prepare to control work#1
+    DEADLINE: <2025-11-05 Wed 13:00>
+
+** notes
+*** TODO chapter #1
+*** TODO chapter #2
+*** TODO chapter #3
+*** TODO chapter #4
+* theoretical foundations of electrical engineering and electronics
+** properties
+*** teacher:
+
+    Belyaeva Julia Alexandrovna
+    Savenko Elena Yurievna
+
+*** text-book:
+** schedule
+*** TODO electro lecture
+    DEADLINE: <2025-12-30 Tue 13:00-14:30> SCHEDULED: <2025-11-04 Tue 13:00-14:30 ++1w>
+
+*** TODO electro seminar
+    DEADLINE: <2025-12-17 Wed 16:30-18:00> SCHEDULED: <2025-11-05 Wed 16:30-18:00 ++2w>
+
+*** TODO lab
+    DEADLINE: <2025-11-01 Sat 13:00-16:15> SCHEDULED: <2025-11-01 Sat 13:00-16:15 ++2w>
+
+** homework
+** notes
+*** TODO all previous lectures or make an exam paper
+* theoretical mechanics
+** properties
+*** teacher:
+
+    Chehovskaya Tatiana Nikolayevna
+    Volkov Evgeniy Valeryevich
+
+*** text-book:
+** schedule
+*** TODO theor.mech lecture
+    DEADLINE: <2025-12-22 Mon 13:00-14:30> SCHEDULED: <2025-11-10 Mon 13:00-14:30 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-27 Mon 13:00]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-27 Mon 13:00]
+
+*** TODO theor.mech seminar
+    DEADLINE: <2025-12-02 Tue 10:45-12:15> SCHEDULED: <2025-11-04 Tue 10:45-12:15 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-21 Tue 10:45]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-21 Tue 10:45]
+
+** homework
+*** TODO theor.mech lab task
+    DEADLINE: <2025-12-01 Mon>
+
+*** TODO theror.mech course work
+    DEADLINE: <2025-12-01 Mon>
+
+*** TODO all digital assignments in lms.mai.ru
+    DEADLINE: <2025-12-01 Mon>
+
+** notes
+*** TODO all previous lectures or make an exam paper
+* differential equations
+** properties
+*** teacher:
+
+    Luneva Svetlana Yurievna
+    Luneva Anna Alexandrovna
+
+*** text-book:
+
+    [[file:differential_equations/fillipov_uchebnik.pdf]]
+    [[file:differential_equations/fillipov_zadachnik.pdf]]
+
+** schedule
+*** TODO diff.eqs lecture
+    DEADLINE: <2025-10-08 Wed 14:45> SCHEDULED: <2025-11-03 Mon 14:45-16:15 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-27 Mon 16:15]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-27 Mon 16:15]
+
+*** TODO diff.eqs seminar
+    DEADLINE: <2025-12-01 Mon 16:30-18:00> SCHEDULED: <2025-11-03 Mon 16:30-18:00 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-20 Mon 16:30]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-20 Mon 16:30]
+
+** homework
+*** TODO course work stage #2
+** notes
+*** DONE lecture #1
+    CLOSED: [2025-11-01 Sat 13:36]
+
+*** DONE lecture #2
+    CLOSED: [2025-11-01 Sat 13:36]
+
+*** DONE lecture #3
+    CLOSED: [2025-11-01 Sat 13:36]
+
+*** DONE lecture #4
+    CLOSED: [2025-11-01 Sat 13:38]
+
+*** DONE lecture #5
+    CLOSED: [2025-11-01 Sat 13:38]
+
+*** DONE lecture #6
+    CLOSED: [2025-11-01 Sat 13:38]
+
+*** TODO lecture #7
+* information technology
+** properties
+*** teacher:
+
+    Barchev Nikolay Borisovich
+
+*** text-book:
+
+    [[file:it/Pavlovskaya_TA_cpp.pdf]]
+    [[file:it/The_C_Kernigan_Ritchie.pdf]]
+
+** schedule
+*** TODO IT lecture
+    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-11-05 Wed 14:45-16:15 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-29 Wed 19:07]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-29 Wed 19:07]
+    - State "DONE"       from "TODO"       [2025-10-22 Wed 14:45]
+
+*** TODO IT seminar
+    DEADLINE: <2025-12-10 Wed 16:30-19:45> SCHEDULED: <2025-11-12 Wed 16:30-19:45 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-29 Wed 19:07]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-29 Wed 19:07]
+    - State "DONE"       from "TODO"       [2025-10-15 Wed 16:30]
+
+** homework
+*** DONE end lab work stage#1
+    CLOSED: [2025-11-01 Sat 12:51]
+
+** notes
+* technical mechanics
+** properties
+*** teacher:
+
+    Pykhtin Alexander Vyacheslavovich
+
+*** text-book:
+** schedule
+*** TODO tech.mech lecture
+    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-10-30 Thu 14:45-16:15 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-23 Thu 14:45]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-23 Thu 14:45]
+
+*** TODO tech.mech seminar
+    DEADLINE: <2025-11-08 Sat 13:00-16:15> SCHEDULED: <2025-11-08 Sat 13:00-16:15 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-25 Sat 13:00]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-25 Sat 13:00]
+
+** homework
+** notes
+*** TODO all previous lectures or make an exam paper
+* engineering graphics
+** properties
+*** teacher:
+
+    Kravchik Tatyana Nikolayevna
+
+*** info: [[https://mai904.ru/]]
+** schedule
+*** TODO eng.graphics seminar
+    DEADLINE: <2025-10-25 Sat 16:30-18:00> SCHEDULED: <2025-10-30 Thu 16:30-18:00 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-28 Tue 23:44]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-28 Tue 23:44]
+
+** homework
+** TODO assignment#5
+*** TODO A3 075.011.000СБ
+*** TODO A3 075.011.001 Корпус
+*** TODO A4 075.011.002 Штуцер
+*** TODO A4 075.011.003 Гайка накидная
+*** TODO A4 075.011.004 Втулка нажимная
+*** TODO A4 075.011.005 Сальник
+*** TODO A4 075.011.006 Кольцо опорное
+*** TODO A4 075.011.010 Шпиндель
+* foreign language
+** properties
+*** teacher:
+
+    Osmina Kira Sergeevna
+    Tatevosyan Maria Alexandrovna
+
+*** text-book:
+
+    [[file:english/mai_uchebnik.pdf]]
+
+** schedule
+*** TODO eng.lang seminar
+    DEADLINE: <2025-12-23 Tue 16:30-18:00> SCHEDULED: <2025-11-04 Tue 16:30-18:00 ++1w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-28 Tue 18:00]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-28 Tue 18:00]
+
+** homework
+*** TODO page 34: 3-9 + make an report: studying in MAI / selected specialization
+    DEADLINE: <2025-11-11 Tue>
+
+** notes
+*** TODO make notes about & figure out all english basics
+* materials science
+** properties
+*** teacher:
+
+    Kaputkina Natalya Anatolyevna
+
+*** text-book:
+** schedule
+*** TODO mat.science lecture
+    DEADLINE: <2025-12-23 Tue 10:45-12:15> SCHEDULED: <2025-11-11 Tue 10:45-12:15 ++2w>
+
+** homework
+** notes
+*** TODO all previous lectures or make an exam paper
+* physical education
+** schedule
+** TODO get 20 attends
+   DEADLINE: <2025-12-31 Wed>
+
+*** DONE attend #1/20
+    CLOSED: [2025-11-01 Sat 12:39]
+
+*** DONE attend #2/20
+    CLOSED: [2025-11-01 Sat 12:39]
+
+*** DONE attend #3/20
+    CLOSED: [2025-11-01 Sat 12:39]
+
+*** TODO attend #4/20
+*** TODO attend #5/20
+*** TODO attend #6/20
+*** TODO attend #7/20
+*** TODO attend #8/20
+*** TODO attend #9/20
+*** TODO attend #10/20
+*** TODO attend #11/20
+*** TODO attend #12/20
+*** TODO attend #13/20
+*** TODO attend #14/20
+*** TODO attend #15/20
+*** TODO attend #16/20
+*** TODO attend #17/20
+*** TODO attend #18/20
+*** TODO attend #19/20
+*** TODO attend #20/20
+* sociology
+** properties
+*** teacher:
+
+    Ryapolov Sergey Vladimirovich
+    Pochestnev Alexander Anatolyevich
+
+** schedule
+*** TODO sociology lecture
+    DEADLINE: <2025-12-15 Mon 13:00-14:30> SCHEDULED: <2025-11-03 Mon 13:00-14:30 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-20 Mon 14:30]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-20 Mon 14:30]
+
+*** TODO sociology seminar
+    DEADLINE: <2025-12-18 Thu 18:15-19:45> SCHEDULED: <2025-11-06 Thu 18:15-19:45 ++2w>
+    :PROPERTIES:
+    :LAST_REPEAT: [2025-10-23 Tue 19:45]
+    :END:
+    - State "DONE"       from "TODO"       [2025-10-23 Tue 19:45]
+
+** homework
+*** TODO group-project
