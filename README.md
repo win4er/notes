@@ -10,7 +10,10 @@ std::cout << "C++ is the greatest language of all time" << std::endl;
 
 > "I believe that I will become somebody bigger than I am being now"
 
-Fuck, my Markdown preview doesnt work with LaTex...
+$$P(x) = x^2/2$$
 
-Now I am making my note-taking config with Typst, LaTex && MarkDown.
-The reason why i want use LaTex && MarkDown is that: github can easily render it
+$$
+f(x) = \int_{-\infty}^\infty
+    \hat f(x)\xi\,e^{2 \pi i \xi x}
+    \,d\xi
+$$
