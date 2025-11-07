@@ -11,6 +11,5 @@
 = Handbook поступающего в ШАД
 
 = Теория вероятности
-
 #include("prob1.typ")
 #pagebreak()

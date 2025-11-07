@@ -14,22 +14,22 @@
   length: 100%,
 )
 
-#let template(doc) = [
+#let template = doc => {
   // Базовые настройки
-  #set page(
+  set page(
     paper: "a4",
     margin: (top: 2.5cm, bottom: 2cm, left: 2cm, right: 2cm),
     fill: dark-theme.background
   )
 
-  #set text(
+  set text(
     fill: dark-theme.text,
     font: ("Helvetica Neue", "Arial", "Liberation Sans"),
     size: 11pt
   )
 
   // Блоки кода (как ```код``` в Markdown)
-  #show raw: it => [
+  show raw: it => [
     #set text(fill: rgb("#dcdcaa"), font: "Consolas")
     #block(
       fill: dark-theme.code-bg,
@@ -40,7 +40,7 @@
   ]
 
   // Inline код (как `код` в Markdown)
-  #show "`": it => {
+  show "`": it => {
     set text(fill: rgb("#dcdcaa"), font: "Fira Code")
     box(
       fill: dark-theme.code-bg,
@@ -51,7 +51,7 @@
   }
 
   // Цитаты (как > цитата в Markdown)
-  #show quote: it => [
+  show quote: it => [
     #block(
       inset: 7pt,
       stroke: (left: 2pt + dark-theme.secondary),
@@ -62,9 +62,9 @@
   ]
 
   // Ссылки
-  #show link: it => [
+  show link: it => [
     #set text(fill: dark-theme.accent, underline: true)
     #it
   ]
-  #doc
-]
+  doc
+}
