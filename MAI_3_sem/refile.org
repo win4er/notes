@@ -1,2 +1,22 @@
 #+TITLE: refile.org
 #+AUTHOR: Platon
+
+* about mai courses
+
+now we need to prepare us for control work,
+then i need to rewrite current notes on typst(so i need typst cfg with snippets and figure support)
+
+* about competitive programming
+
+well, i have to start from practising basic problems in leetcode and after understanding the basics, i can go further(atcoder, codeforces)
+
+* about cheats
+
+I want to make cheats for games. Cheats development requires good understanding about how memory works.
+
+Also i am intrested in malware development
+
+* about study workflow
+
+on weekend we are going to fix our study workflow again, i dont like tha way i write notes on Pad and also my typst config doesnt exist
+

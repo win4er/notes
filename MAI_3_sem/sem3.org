@@ -14,22 +14,22 @@
 
 ** schedule
 *** TODO pt&ms lecture
-    DEADLINE: <2025-11-10 Mon 10:45-12:15> SCHEDULED: <2025-09-08 Mon 10:45-12:15 ++1w>
+    DEADLINE: <2025-11-10 Mon 10:45-12:15> SCHEDULED: <2025-09-08 Mon 10:45-12:15 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-27 Mon 12:15]
     :END:
     - State "DONE"       from "TODO"       [2025-10-27 Mon 12:15]
 
 *** TODO pt&ms seminar
-    DEADLINE: <2025-12-17 Wed 13:00-14:30> SCHEDULED: <2025-09-24 Wed 13:00-14:30 ++2w>
+    DEADLINE: <2025-12-17 Wed 13:00-14:30> SCHEDULED: <2025-09-24 Wed 13:00-14:30 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-22 Wed 13:00]
     :END:
     - State "DONE"       from "TODO"       [2025-10-22 Wed 13:00]
 
 ** homework
-*** TODO prepare to control work#1
-    DEADLINE: <2025-11-05 Wed 13:00>
+*** DONE prepare to control work#1
+    CLOSED: [2025-11-04 Tue 21:50] DEADLINE: <2025-11-05 Wed 13:00>
 
 ** notes
 *** TODO chapter #1
@@ -46,15 +46,20 @@
 *** text-book:
 ** schedule
 *** TODO electro lecture
-    DEADLINE: <2025-12-30 Tue 13:00-14:30> SCHEDULED: <2025-11-04 Tue 13:00-14:30 ++1w>
+    DEADLINE: <2025-12-30 Tue 13:00-14:30> SCHEDULED: <2025-11-04 Tue 13:00-14:30 ++1w -2h>
 
 *** TODO electro seminar
-    DEADLINE: <2025-12-17 Wed 16:30-18:00> SCHEDULED: <2025-11-05 Wed 16:30-18:00 ++2w>
+    DEADLINE: <2025-12-17 Wed 16:30-18:00> SCHEDULED: <2025-11-05 Wed 16:30-18:00 ++2w -2h>
 
 *** TODO lab
-    DEADLINE: <2025-11-01 Sat 13:00-16:15> SCHEDULED: <2025-11-01 Sat 13:00-16:15 ++2w>
+    DEADLINE: <2025-11-01 Sat 13:00-16:15> SCHEDULED: <2025-11-01 Sat 13:00-16:15 ++2w -2h>
 
 ** homework
+*** make a report for 3-5 lab works
+    DEADLINE: <2025-11-06 Thu 14:45-16:15>
+
+с графиками
+
 ** notes
 *** TODO all previous lectures or make an exam paper
 * theoretical mechanics
@@ -67,14 +72,14 @@
 *** text-book:
 ** schedule
 *** TODO theor.mech lecture
-    DEADLINE: <2025-12-22 Mon 13:00-14:30> SCHEDULED: <2025-11-10 Mon 13:00-14:30 ++2w>
+    DEADLINE: <2025-12-22 Mon 13:00-14:30> SCHEDULED: <2025-11-10 Mon 13:00-14:30 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-27 Mon 13:00]
     :END:
     - State "DONE"       from "TODO"       [2025-10-27 Mon 13:00]
 
 *** TODO theor.mech seminar
-    DEADLINE: <2025-12-02 Tue 10:45-12:15> SCHEDULED: <2025-11-04 Tue 10:45-12:15 ++2w>
+    DEADLINE: <2025-12-02 Tue 10:45-12:15> SCHEDULED: <2025-11-04 Tue 10:45-12:15 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-21 Tue 10:45]
     :END:
@@ -106,21 +111,23 @@
 
 ** schedule
 *** TODO diff.eqs lecture
-    DEADLINE: <2025-10-08 Wed 14:45> SCHEDULED: <2025-11-03 Mon 14:45-16:15 ++1w>
+    DEADLINE: <2025-10-08 Wed 14:45> SCHEDULED: <2025-11-03 Mon 14:45-16:15 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-27 Mon 16:15]
     :END:
     - State "DONE"       from "TODO"       [2025-10-27 Mon 16:15]
 
 *** TODO diff.eqs seminar
-    DEADLINE: <2025-12-01 Mon 16:30-18:00> SCHEDULED: <2025-11-03 Mon 16:30-18:00 ++1w>
+    DEADLINE: <2025-12-01 Mon 16:30-18:00> SCHEDULED: <2025-11-03 Mon 16:30-18:00 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-20 Mon 16:30]
     :END:
     - State "DONE"       from "TODO"       [2025-10-20 Mon 16:30]
 
 ** homework
-*** TODO course work stage #2
+*** DONE course work stage #2
+    CLOSED: <2025-11-02 Sun 13:10>
+
 ** notes
 *** DONE lecture #1
     CLOSED: [2025-11-01 Sat 13:36]
@@ -141,6 +148,7 @@
     CLOSED: [2025-11-01 Sat 13:38]
 
 *** TODO lecture #7
+*** TODO lecture #8
 * information technology
 ** properties
 *** teacher:
@@ -154,7 +162,7 @@
 
 ** schedule
 *** TODO IT lecture
-    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-11-05 Wed 14:45-16:15 ++1w>
+    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-11-05 Wed 14:45-16:15 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-29 Wed 19:07]
     :END:
@@ -162,7 +170,7 @@
     - State "DONE"       from "TODO"       [2025-10-22 Wed 14:45]
 
 *** TODO IT seminar
-    DEADLINE: <2025-12-10 Wed 16:30-19:45> SCHEDULED: <2025-11-12 Wed 16:30-19:45 ++2w>
+    DEADLINE: <2025-12-10 Wed 16:30-19:45> SCHEDULED: <2025-11-12 Wed 16:30-19:45 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-29 Wed 19:07]
     :END:
@@ -183,14 +191,14 @@
 *** text-book:
 ** schedule
 *** TODO tech.mech lecture
-    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-10-30 Thu 14:45-16:15 ++1w>
+    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-10-30 Thu 14:45-16:15 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-23 Thu 14:45]
     :END:
     - State "DONE"       from "TODO"       [2025-10-23 Thu 14:45]
 
 *** TODO tech.mech seminar
-    DEADLINE: <2025-11-08 Sat 13:00-16:15> SCHEDULED: <2025-11-08 Sat 13:00-16:15 ++2w>
+    DEADLINE: <2025-11-08 Sat 13:00-16:15> SCHEDULED: <2025-11-08 Sat 13:00-16:15 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-25 Sat 13:00]
     :END:
@@ -208,7 +216,7 @@
 *** info: [[https://mai904.ru/]]
 ** schedule
 *** TODO eng.graphics seminar
-    DEADLINE: <2025-10-25 Sat 16:30-18:00> SCHEDULED: <2025-10-30 Thu 16:30-18:00 ++1w>
+    DEADLINE: <2025-10-25 Sat 16:30-18:00> SCHEDULED: <2025-10-30 Thu 16:30-18:00 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-28 Tue 23:44]
     :END:
@@ -237,7 +245,7 @@
 
 ** schedule
 *** TODO eng.lang seminar
-    DEADLINE: <2025-12-23 Tue 16:30-18:00> SCHEDULED: <2025-11-04 Tue 16:30-18:00 ++1w>
+    DEADLINE: <2025-12-23 Tue 16:30-18:00> SCHEDULED: <2025-11-04 Tue 16:30-18:00 ++1w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-28 Tue 18:00]
     :END:
@@ -258,7 +266,7 @@
 *** text-book:
 ** schedule
 *** TODO mat.science lecture
-    DEADLINE: <2025-12-23 Tue 10:45-12:15> SCHEDULED: <2025-11-11 Tue 10:45-12:15 ++2w>
+    DEADLINE: <2025-12-23 Tue 10:45-12:15> SCHEDULED: <2025-11-11 Tue 10:45-12:15 ++2w -2h>
 
 ** homework
 ** notes
@@ -303,14 +311,14 @@
 
 ** schedule
 *** TODO sociology lecture
-    DEADLINE: <2025-12-15 Mon 13:00-14:30> SCHEDULED: <2025-11-03 Mon 13:00-14:30 ++2w>
+    DEADLINE: <2025-12-15 Mon 13:00-14:30> SCHEDULED: <2025-11-03 Mon 13:00-14:30 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-20 Mon 14:30]
     :END:
     - State "DONE"       from "TODO"       [2025-10-20 Mon 14:30]
 
 *** TODO sociology seminar
-    DEADLINE: <2025-12-18 Thu 18:15-19:45> SCHEDULED: <2025-11-06 Thu 18:15-19:45 ++2w>
+    DEADLINE: <2025-12-18 Thu 18:15-19:45> SCHEDULED: <2025-11-06 Thu 18:15-19:45 ++2w -2h>
     :PROPERTIES:
     :LAST_REPEAT: [2025-10-23 Tue 19:45]
     :END:
