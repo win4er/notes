@@ -16,3 +16,5 @@
 #pagebreak()
 #include("prob2.typ")
 #pagebreak()
+#include("prob3.typ")
+#pagebreak()

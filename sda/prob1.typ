@@ -71,7 +71,7 @@
       + $(A without B) (B without A) = emptyset$
       + $A + B = B + A$
       + $A B = B A$
-      + $overline(A + B) = overline(A) overline(B), overline(A B) = overline(A) + overline(B)("законы Де-Моргана")$
+      + $overline(A + B) = overline(A) dot.op overline(B), overline(A B) = overline(A) + overline(B)("законы Де-Моргана")$
       + $A + overline(A) = Omega$
     ]
   )
