@@ -14,3 +14,5 @@
 #pagebreak()
 #include("lec2.typ")
 #pagebreak()
+#include("lec3.typ")
+#pagebreak()
