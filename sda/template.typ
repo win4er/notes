@@ -14,6 +14,12 @@
   length: 100%,
 )
 
+// Ссылки
+#show link: it => [
+  #set text(fill: dark-theme.accent, underline: true)
+  #it
+]
+
 #let template = doc => {
   // Базовые настройки
   set page(
@@ -61,10 +67,5 @@
     )
   ]
 
-  // Ссылки
-  show link: it => [
-    #set text(fill: dark-theme.accent, underline: true)
-    #it
-  ]
   doc
 }

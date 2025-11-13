@@ -55,8 +55,8 @@
     DEADLINE: <2025-11-01 Sat 13:00-16:15> SCHEDULED: <2025-11-01 Sat 13:00-16:15 ++2w -2h>
 
 ** homework
-*** make a report for 3-5 lab works
-    DEADLINE: <2025-11-06 Thu 14:45-16:15>
+*** DONE make a report for 3-5 lab works
+    CLOSED: [2025-11-08 Sat 13:08] DEADLINE: <2025-11-06 Thu 14:45-16:15>
 
 с графиками
 
@@ -130,23 +130,15 @@
 
 ** notes
 *** DONE lecture #1
-    CLOSED: [2025-11-01 Sat 13:36]
-
+    CLOSED: [2025-11-11 Tue 13:34]
 *** DONE lecture #2
-    CLOSED: [2025-11-01 Sat 13:36]
-
+    CLOSED: [2025-11-11 Tue 13:34]
 *** DONE lecture #3
-    CLOSED: [2025-11-01 Sat 13:36]
-
+    CLOSED: [2025-11-11 Tue 14:58]
 *** DONE lecture #4
-    CLOSED: [2025-11-01 Sat 13:38]
-
-*** DONE lecture #5
-    CLOSED: [2025-11-01 Sat 13:38]
-
-*** DONE lecture #6
-    CLOSED: [2025-11-01 Sat 13:38]
-
+    CLOSED: [2025-11-11 Tue 22:52]
+*** TODO lecture #5
+*** TODO lecture #6
 *** TODO lecture #7
 *** TODO lecture #8
 * information technology
@@ -252,8 +244,8 @@
     - State "DONE"       from "TODO"       [2025-10-28 Tue 18:00]
 
 ** homework
-*** TODO page 34: 3-9 + make an report: studying in MAI / selected specialization
-    DEADLINE: <2025-11-11 Tue>
+*** DONE page 34: 3-9 + make an report: studying in MAI / selected specialization
+    DEADLINE: <2025-11-11 Tue> CLOSED: [2025-11-11 Tue 12:05]
 
 ** notes
 *** TODO make notes about & figure out all english basics
@@ -269,6 +261,9 @@
     DEADLINE: <2025-12-23 Tue 10:45-12:15> SCHEDULED: <2025-11-11 Tue 10:45-12:15 ++2w -2h>
 
 ** homework
+*** TODO to make some notes for lab1
+    DEADLINE: <2025-11-15 Sat -1d>
+
 ** notes
 *** TODO all previous lectures or make an exam paper
 * physical education

@@ -1,4 +1,5 @@
 #import "template.typ": *
+
 #set page(numbering: "1")
 #show: template
 
@@ -17,4 +18,6 @@
 #include("prob2.typ")
 #pagebreak()
 #include("prob3.typ")
+#pagebreak()
+#include("prob4.typ")
 #pagebreak()
