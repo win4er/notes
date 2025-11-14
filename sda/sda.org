@@ -2,11 +2,8 @@
 #+AUTHOR: Platon
 
 * algebra
-
 * mathematical analysis
-
 * combinatorics
-
 * theory of probability
 ** exam paper
 *** DONE #1 basics of probability
@@ -19,10 +16,7 @@
     CLOSED: [2025-11-09 Sun 21:49]
 
 *** TODO #4 mathematical expectation
-
 *** TODO #5 [crazy] inequalities & convergence
-
 *** TODO #6 distributions
 * programming & dsa
-
 * data analysis
