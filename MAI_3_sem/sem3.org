@@ -131,16 +131,22 @@
 ** notes
 *** DONE lecture #1
     CLOSED: [2025-11-11 Tue 13:34]
+
 *** DONE lecture #2
     CLOSED: [2025-11-11 Tue 13:34]
+
 *** DONE lecture #3
     CLOSED: [2025-11-11 Tue 14:58]
+
 *** DONE lecture #4
     CLOSED: [2025-11-11 Tue 22:52]
+
 *** TODO lecture #5
 *** TODO lecture #6
 *** TODO lecture #7
 *** TODO lecture #8
+*** TODO lecture #9
+*** TODO lecture #10
 * information technology
 ** properties
 *** teacher:
@@ -154,30 +160,36 @@
 
 ** schedule
 *** TODO IT lecture
-    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-11-05 Wed 14:45-16:15 ++1w -2h>
+    DEADLINE: <2025-12-25 Thu 14:45-16:15> SCHEDULED: <2025-11-19 Wed 14:45-16:15 ++1w -2h>
     :PROPERTIES:
-    :LAST_REPEAT: [2025-10-29 Wed 19:07]
+    :LAST_REPEAT: [2025-11-14 Fri 12:44]
     :END:
+    - State "DONE"       from "TODO"       [2025-11-14 Fri 12:44]
     - State "DONE"       from "TODO"       [2025-10-29 Wed 19:07]
     - State "DONE"       from "TODO"       [2025-10-22 Wed 14:45]
 
 *** TODO IT seminar
-    DEADLINE: <2025-12-10 Wed 16:30-19:45> SCHEDULED: <2025-11-12 Wed 16:30-19:45 ++2w -2h>
+    DEADLINE: <2025-12-10 Wed 16:30-19:45> SCHEDULED: <2025-11-26 Wed 16:30-19:45 ++2w -2h>
     :PROPERTIES:
-    :LAST_REPEAT: [2025-10-29 Wed 19:07]
+    :LAST_REPEAT: [2025-11-14 Fri 12:45]
     :END:
+    - State "DONE"       from "TODO"       [2025-11-14 Fri 12:45]
     - State "DONE"       from "TODO"       [2025-10-29 Wed 19:07]
     - State "DONE"       from "TODO"       [2025-10-15 Wed 16:30]
 
 ** homework
 *** DONE end lab work stage#1
     CLOSED: [2025-11-01 Sat 12:51]
+*** TODO last task:
+**** TODO fix bugs & make few changes
+**** TODO make a report
 
 ** notes
+
 * technical mechanics
 ** properties
 *** teacher:
-
+    
     Pykhtin Alexander Vyacheslavovich
 
 *** text-book:
@@ -245,7 +257,7 @@
 
 ** homework
 *** DONE page 34: 3-9 + make an report: studying in MAI / selected specialization
-    DEADLINE: <2025-11-11 Tue> CLOSED: [2025-11-11 Tue 12:05]
+    CLOSED: [2025-11-11 Tue 12:05] DEADLINE: <2025-11-11 Tue>
 
 ** notes
 *** TODO make notes about & figure out all english basics
