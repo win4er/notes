@@ -148,12 +148,7 @@ void write_car_data() {
             }
         }
         if (filled) {
-            fwrite(temp.brand.c_str(), 1, temp.brand.size(), file);
-            fputc(' ', file);
-            fwrite(temp.model.c_str(), 1, temp.model.size(), file);
-            fputc(' ', file);
-            fwrite(temp.license.c_str(), 1, temp.license.size(), file);
-            fputc('\n', file);
+            fprintf(file, "%s %s %s\n", temp.brand.c_str(), temp.model.c_str(), temp.license.c_str());
             printf(
                 "Запись #%d завершена:\nбренд: %s\nмодель: %s\nномерной знак: %s\n",
                 ++note_number,
@@ -235,12 +230,7 @@ void write_license_data() {
 
         }
         if (filled) {
-            fwrite(temp.surname.c_str(), 1, temp.surname.size(), file);
-            fputc(' ', file);
-            fwrite(temp.address.c_str(), 1, temp.address.size(), file);
-            fputc(' ', file);
-            fwrite(temp.release_year.c_str(), 1, temp.release_year.size(), file);
-            fputc('\n', file);
+            fprintf(file, "%s %s %s %s\n", temp.license.c_str(), temp.surname.c_str(), temp.address.c_str(), temp.release_year.c_str());
             printf(
                 "Запись #%d завершена:\nномерной знак: %s\nфамилия владельца: %s\nадрес: %s\nгод выпуска: %s\n",
                 ++note_number,

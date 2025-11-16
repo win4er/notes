@@ -3,6 +3,6 @@ all: main.o file_handler.o
 main.o: main.cpp
 	g++ -g -c main.cpp
 file_handler.o: file_handler.cpp
-	g++ -c file_handler.cpp
+	g++ -c file_handler.cpp -std=c++17
 clean:
 	rm -f *.o *.out *.exe *.txt
