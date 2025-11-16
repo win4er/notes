@@ -113,7 +113,7 @@ void write_car_data() {
     int field_index=0;
     CarData temp = {};
     printf("Начинаем заполнять автомобильные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
-    std::string field_names[3] = {"бренд", "модель", "номерной знак"};
+    std::string field_names[3] = {"бренд (символы: А-ЯЁа-яёA-Za-z0-9-_.! )", "модель (символы: А-ЯЁа-яёA-Za-z0-9-_.!() )", "номерной знак (пример: M976MM777RUS)"};
     printf("Введите поле %s:\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
@@ -185,7 +185,7 @@ void write_license_data() {
     LicenseData temp = {};
 
     printf("Начинаем заполнять регистрационные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
-    std::string field_names[4] = {"номерной знак", "фамилия владельца", "адрес владельца", "год выпуска"};
+    std::string field_names[4] = {"номерной знак (пример: M976MM777RUS)", "фамилия владельца (символы: А-ЯЁа-яёA-Za-z)", "адрес владельца (символы: A-Za-zА-ЯЁа-яё0-9!_-. )", "год выпуска (символы: 0-9)"};
     printf("Введите поле '%s':\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
