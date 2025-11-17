@@ -163,8 +163,6 @@ void write_car_data() {
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
     fclose(file);
-    if (file) printf("Не удалось закрыть файл: %s\n", file_name.c_str());
-    else printf("Файл %s успешно закрыт\n", file_name.c_str());
     // clear stdin to ignore EOF
     clearerr(stdin);
     return;
@@ -247,8 +245,6 @@ void write_license_data() {
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
     fclose(file);
-    if (file) printf("Не удалось закрыть файл: %s\n", file_name.c_str());
-    else printf("Файл %s успешно закрыт\n", file_name.c_str());
     // clear stdin to ignore EOF
     clearerr(stdin);
     return;
