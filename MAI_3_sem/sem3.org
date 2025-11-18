@@ -181,7 +181,8 @@
 *** DONE end lab work stage#1
     CLOSED: [2025-11-01 Sat 12:51]
 *** TODO last task:
-**** TODO fix bugs & make few changes
+**** DONE fix bugs & make few changes
+     CLOSED: [2025-11-18 Tue 10:32]
 **** TODO make a report
 
 ** notes
