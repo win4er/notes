@@ -72,7 +72,7 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
         else {
             printf("¬веденное им€ файла некорректно. ‘айл должен иметь вид file.txt, \n");
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивани€(_),\n");
-            printf("а, после следует его расширение .txt");
+            printf("а, после следует его расширение .txt\n");
             printf("¬ведите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
