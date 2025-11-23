@@ -1,13 +1,23 @@
 #+TITLE: refile.org
 #+AUTHOR: Platon
 
-* about competitive programming
+* preparing to tech interview
+**  What they require:
+*** OS architecture
+*** C/C++
+*** Familiar with Linux and/ Windows
+# interest in the creation && development of information security tools
+** What i also should reread:
+*** Network basics: OSI, TCP/IP, UDP, DNS, DHCP, Proxy, VPN, DPI
+*** Python, git, bash, mb asm
+*** Database knowledge: basics and PostgreSQL, SQLite
+*** some cybersec utily: Wireshark, Burp Suite, Nmap, GDB
 
-well, i have to start from practising basic problems in leetcode and after understanding the basics, i can go further(atcoder, codeforces)
-
-* about cheats
-
-I want to make cheats for games. Cheats development requires good understanding about how memory works.
-
-Also i am intrested in malware development
+** Ideas for C/C++ projects:
+   1. math program(find in old repos)
+   2. Operaing System
+   3. Cheats for CS2/Dota2 (For memory + OS understanding)
+   4. Messanger (for Network Knowledge)
+   5. Analogue for nmap, wireshark or something
+   6. project with compressing technology(imgs, pdfs, audio & etc...)
 

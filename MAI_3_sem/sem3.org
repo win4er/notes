@@ -127,6 +127,8 @@
 ** homework
 *** DONE course work stage #2
     CLOSED: <2025-11-02 Sun 13:10>
+*** TODO course work stage #3
+*** TODO course work stage #4
 
 ** notes
 *** DONE lecture #1
@@ -228,7 +230,6 @@
     - State "DONE"       from "TODO"       [2025-10-28 Tue 23:44]
 
 ** homework
-** TODO assignment#5
 *** TODO A3 075.011.000СБ
 *** TODO A3 075.011.001 Корпус
 *** TODO A4 075.011.002 Штуцер
