@@ -20,6 +20,7 @@ struct LicenseData {
     std::string release_year;
 };
 
+void clear_stdin();
 bool validate_filename(std::string filename);
 bool validate_license(std::string license);
 bool validate_brand(std::string brand);
