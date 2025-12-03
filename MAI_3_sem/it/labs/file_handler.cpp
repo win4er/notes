@@ -78,11 +78,10 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
         else {
             printf("Введенное имя файла некорректно. Файл должен иметь вид file.txt, \n");
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
-            printf("а, после следует его расширение .txt\n");
+            printf("а после следует его расширение .txt\n");
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
-    clear_stdin();
     if (file_name.size()==0) {
         file_name = default_file_name;
     }
@@ -90,6 +89,7 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?\n", file_name.c_str());
         while ((BUFFER[0]=getchar()) != EOF) {
+            clear_stdin();
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
                 break;
@@ -98,7 +98,6 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
                 file_info.second = "w";
                 break;
             } else printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
-            clear_stdin();
         }
     } else file_info.second = "w";
     return file_info;
