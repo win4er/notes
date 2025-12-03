@@ -2,6 +2,7 @@
 
 std::string DEFAULT_FILENAME_1 = "car_data.txt";
 std::string DEFAULT_FILENAME_2 = "license_data.txt";
+const int LOWER_BOUND_YEAR = 1960;
 
 char BUFFER[256];
 
@@ -43,22 +44,22 @@ bool validate_address(std::string address) {
 
 bool validate_release_year(std::string release_year) {
     bool result=true;
-    int year=0;
+    if (release_year.size()==0) {
+        printf("Введена пустая строка.\n");
+        return false;
+    }
     for (int i=0; i<release_year.size(); ++i) {
         if (!isdigit(release_year[i])) {
-            printf("Год должен содержать только цифры\n");
-            result = false;
-            break;
-        } else {
-            year *= 10;
-            year += (release_year[i]-'0');
+            printf("Строка не полностью состоит из цифр.\n");
+            return false;
         }
     }
+    int year=std::stoi(release_year);
     std::time_t t = std::time(nullptr);
     std::tm *const pTInfo = std::localtime(&t);
     int current_year = 1900 + pTInfo->tm_year;
-    if (!(year >= 1960 && year <= current_year)) {
-        printf("Год вне диапазона\n");
+    if (!(year >= LOWER_BOUND_YEAR && year <= current_year) || year <= 0) {
+        printf("Год вне диапазона(%d-%d)\n", LOWER_BOUND_YEAR, current_year);
         result = false;
     }
     return result;
@@ -121,7 +122,7 @@ void write_car_data() {
     printf("Введите поле %s:\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
-    while (scanf("%32[^\n]s", BUFFER) != EOF) {
+    while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
             clear_stdin();
@@ -192,7 +193,7 @@ void write_license_data() {
     printf("Введите поле '%s':\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
-    while (scanf("%32[^\n]s", BUFFER) != EOF) {
+    while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
             clear_stdin();
@@ -223,7 +224,7 @@ void write_license_data() {
             }
             case 3: {
                 temp.release_year.assign(BUFFER);
-                if (validate_address(temp.release_year)) {
+                if (validate_release_year(temp.release_year)) {
                     field_index = (field_index+1)%4;
                     filled = true;
                 } else printf("Поле введено некорректно, попробуйте еще раз\n");

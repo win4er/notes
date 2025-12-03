@@ -19,6 +19,7 @@ int main() {
 
         printf("Желаете продолжить запись? (enter=Да/N=Нет)\n");
         input = getchar();
+        clear_stdin();
         if (input == 'N' || input == 'n') {
             break;
         } else printf("Введен %c, программа продолжает работу\n", input);
@@ -27,6 +28,6 @@ int main() {
     }
     printf("Нажмите любую клавишу для завершения программы...");
     scanf("%c", &input);
-    printf("Программа завершена\n");
+    printf("Программа завершена.\n");
     return 0;
 }
