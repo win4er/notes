@@ -189,7 +189,7 @@ void write_license_data() {
 
     printf("Начинаем заполнять регистрационные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
     std::string field_names[4] = {"номерной знак (пример: M976MM777RUS)", "фамилия владельца (символы: А-ЯЁа-яёA-Za-z)", "адрес владельца (символы: A-Za-zА-ЯЁа-яё0-9!_-. )", "год выпуска (символы: 0-9)"};
-    printf("Введите поле '%s':\n", field_names[field_index].c_str());
+    printf("Введите поле %s:\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
     while (scanf("%255[^\n]s", BUFFER) != EOF) {
