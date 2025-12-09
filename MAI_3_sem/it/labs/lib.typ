@@ -6,11 +6,7 @@
 #let basic-report(
   doc-category: none,
   doc-title: none,
-<<<<<<< Updated upstream
-  title-size: 34pt,
-=======
   title-size: 36pt,
->>>>>>> Stashed changes
   author: none,
   study-group: none,
   affiliation: none,
@@ -31,11 +27,7 @@
   set document(title: doc-title, author: author)
   set text(lang: language)
 
-<<<<<<< Updated upstream
-  let body-font = "Fira Code"
-=======
   let body-font = "Vollkorn"
->>>>>>> Stashed changes
   let body-size = 11pt
   // let heading-font = "Ubuntu"
 
@@ -93,15 +85,7 @@
   //     header with height ≈ 0.6cm is visually part of text block --> top margin = 3cm + 0.6cm
   set page(               // standard page with header
     paper: "a4",
-<<<<<<< HEAD
     margin: (top: 2cm, left: 2cm, right: 2cm, bottom: 3cm),
-=======
-<<<<<<< Updated upstream
-    margin: (top: 2cm, left: 3cm, right: 3cm, bottom: 3cm),
-=======
-    margin: (top: 3.6cm, left: 3cm, right: 3cm, bottom: 3cm),
->>>>>>> Stashed changes
->>>>>>> 8f7567c68849f7dc1692ad9e9c9e6edb96af46cd
     // the header shows the main chapter heading on the left and the page number on the right
     header: context {
       if compact-mode and (counter(page).get().first() == 1) {
