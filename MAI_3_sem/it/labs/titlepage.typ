@@ -65,7 +65,7 @@
       text(
         font: heading-font, weight: "regular", size: info-size, fill: black,
         strong("Преподаватель") + str("\n") +
-        first-examiner
+        first-examiner + strong(" ______") + str("\n")
         //strong("Second Reader") + str("\n") +
         //second-examiner
       )

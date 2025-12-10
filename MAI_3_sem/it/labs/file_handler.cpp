@@ -1,47 +1,65 @@
 #include "file_handler.hpp"
 
+// основные стандартные параметры
 std::string DEFAULT_FILENAME_1 = "car_data.txt";
 std::string DEFAULT_FILENAME_2 = "license_data.txt";
 const int LOWER_BOUND_YEAR = 1960;
 
+// буффер ввода
 char BUFFER[256];
 
+// функция очистки потока ввода, 
+// fseek() не подходит, тк не работает под Linux
 void clear_stdin() {
     int temp;
     while ((temp = getchar()) != EOF && temp != '\n');
 }
 
+// Стоит отметить, что почти все функции валидации используют
+// регулярные выражения, сделано это для упрощения проверок
+
+
+// функция валидации имени файла
 bool validate_filename(std::string filename) {
     std::regex regex_filename{"[a-zA-Z0-9_-]+\\.txt"};
     return std::regex_match(filename, regex_filename);
 }
 
+// функция валидации поля "номерной знак"
 bool validate_license(std::string license) {
     // M976MM777RUS
     std::regex pattern{"[ABEKMHOPCTYX][0-9]{3,3}[ABEKMHOPCTYX]{2,2}[0-9]{2,3}RUS"};
     return regex_match(license, pattern);
 }
 
+// функция валидации поля "бренд"
 bool validate_brand(std::string brand) {
     std::regex pattern{"[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.! ]+"};
     return regex_match(brand, pattern);
 }
 
+// функция валидации поля "модель"
 bool validate_model(std::string model) {
     std::regex pattern{"[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.!() ]+"};
     return regex_match(model, pattern);
 }
 
+// функция валидации поля "фамилия владельца"
 bool validate_surname(std::string surname) {
     std::regex pattern{"[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z]+"};
     return regex_match(surname, pattern);
 }
 
+// функция валидации поля "адрес владельца"
 bool validate_address(std::string address) {
     std::regex address_pattern{"[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9!_. ]+"};
     return regex_match(address, address_pattern);
 }
 
+// функция валидации поля "год выпуска"
+// Здесь проверка не содержит регулярных выражений
+// Проверка заключается в попытке перевести пользовательский ввод в число,
+// а затем в проверке подходит ли число временному диапазону
 bool validate_release_year(std::string release_year) {
     bool result=true;
     if (release_year.size()==0) {
@@ -65,6 +83,11 @@ bool validate_release_year(std::string release_year) {
     return result;
 }
 
+// функция для определения имени и режима открытия файла
+// Она спрашивает у пользователя имя файла и, если
+// ОС позволяет использовать данное имя файла, то
+// файл будет с заданным пользователем именем файла,
+// иначе надо будет вводить имя файла, пока оно не удовлетворит критериям ОС.
 std::pair<std::string, std::string> file_info(std::string default_file_name) {
     std::pair<std::string, std::string> file_info;
     std::string file_name;
@@ -86,6 +109,8 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
         file_name = default_file_name;
     }
     file_info.first = file_name;
+    // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
+    // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?\n", file_name.c_str());
         while ((BUFFER[0]=getchar()) != EOF) {
@@ -103,11 +128,13 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     return file_info;
 }
 
+// функция записи автомобильных сведений в файл
 void write_car_data() {
     std::pair<std::string, std::string> file_information = file_info(DEFAULT_FILENAME_1);
     std::string file_name = file_information.first;
     FILE* file = std::fopen(file_name.c_str(), file_information.second.c_str());
-     
+    
+    // проверка на открытие файла
     if (!file) {
         printf("Не удалось открыть файл %s\n", file_name.c_str());
         return;
@@ -121,6 +148,10 @@ void write_car_data() {
     printf("Введите поле %s:\n", field_names[field_index].c_str());
     bool filled = false;
     int note_number = 0;
+
+    // Ниже идет последовательная запись полей и соответствующих им записей в файл
+    // Если поле не проходит валидацию, то оно не будет занесено в файл, 
+    // пока не пройдет валидацию.
     while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
@@ -168,11 +199,14 @@ void write_car_data() {
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
     fclose(file);
-    // clear stdin to ignore EOF
+    // Здесь происходит очистка потока ввода от EOF
     clearerr(stdin);
     return;
 }
 
+// функция записи регистрационных сведений в файл
+// она польностью аналогична функции write_car_data(),
+// лишь за тем исключением что записывает другие поля
 void write_license_data() {
     std::pair<std::string, std::string> file_information = file_info(DEFAULT_FILENAME_2);
     std::string file_name = file_information.first;
