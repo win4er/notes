@@ -32,8 +32,9 @@
 #pagebreak()
 = Chapter 0: Introduction
 
-#pagebreak()
+
 == Penetration Testing Process
+#include("penetration_testing_process.typ")
 
 #pagebreak()
 == Getting Started
@@ -42,7 +43,6 @@
 #pagebreak()
 = Chapter 1: CReconnaissance, Enumeration & Attack Planning
 
-#pagebreak()
 == Network Enumeration with Nmap
 
 #pagebreak()
@@ -67,7 +67,6 @@
 #pagebreak()
 = Chapter II: Exploitation & Lateral Movement
 
-#pagebreak()
 == Password Attacks
 
 #pagebreak()
@@ -83,7 +82,6 @@
 #pagebreak()
 = Chapter III: Web Exploitation
 
-#pagebreak()
 == Using Web Proxies
 
 #pagebreak()
@@ -117,7 +115,6 @@
 #pagebreak()
 = Chapter IV: Post-Exploitation
 
-#pagebreak()
 == Linux Privilege Escalation
 
 #pagebreak()
@@ -127,7 +124,6 @@
 #pagebreak()
 = Chapter V: Reporting & Capstone
 
-#pagebreak()
 == Documentation & Reporting
 
 #pagebreak()
