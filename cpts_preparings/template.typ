@@ -30,7 +30,7 @@
 
   set text(
     fill: dark-theme.text,
-    font: ("Helvetica Neue", "Arial", "Liberation Sans"),
+    font: "Hack",
     size: 11pt
   )
 
