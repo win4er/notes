@@ -93,7 +93,6 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     std::string file_name;
     printf("Введите название файла(enter=%s): ", default_file_name.c_str());
     while (scanf("%255[^\n]s", BUFFER)) {
-        clear_stdin();
         file_name = BUFFER;
         if (validate_filename(file_name)) {
             break;
@@ -114,7 +113,6 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?\n", file_name.c_str());
         while ((BUFFER[0]=getchar()) != EOF) {
-            clear_stdin();
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
                 break;
@@ -125,6 +123,7 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             } else printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
         }
     } else file_info.second = "w";
+    clear_stdin();
     return file_info;
 }
 
