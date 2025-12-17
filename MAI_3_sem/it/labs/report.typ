@@ -209,7 +209,7 @@
   [main],
   [Точка входа программы],
   [Отсутствуют],
-  [Код завершения программы.\ Тип: int],
+  [Код завершения программы.\ *Тип*: int],
 ) 
 
 файл file_handler.hpp:
@@ -221,18 +221,21 @@
   table.header(
     [*Библиотека*], [*Назначение*]
   ),
-  
+
+  [cstdlib],
+  [стандартная библиотека C],
+
   [cstdio],
   [библиотека стандартного ввода/вывода C],
+  
+  [cstring],
+  [библиотека для подключения функции memset],
 
   [string],
   [библиотека для работы с "умными" строками],
 
   [regex],
   [библиотека для работы с регулярными выражениями],
-
-  [cstdlib],
-  [стандартная библиотека C],
 
   [filesystem],
   [
@@ -274,7 +277,6 @@
   table.header(
     [*Прототип функции*]
   ),
-  [```cpp void clear_stdin()```],
   [```cpp bool validate_filename(std::string filename)```],
   [```cpp bool validate_license(std::string license)```],
   [```cpp bool validate_brand(std::string brand)```],
@@ -300,11 +302,6 @@
     [*Функция*], [*Назначение*], [*Аргументы*], [*Возвращает*]
   ),
   
-  [clear_stdin],
-  [Очистка потока ввода],
-  [Отсутствуют],
-  [Ничего.\ *Тип*: void],
-  
   [validate_filename],
   [Валидация имени файла],
   [*filename* -- имя файла.\ *Тип*: std::string],
@@ -314,7 +311,6 @@
   [Валидация поля номерной знак],
   [*license* -- содержимое поля номерной знак.\ *Тип*: std::string],
   [true если номерной знак введен верно,\ иначе false.\ *Тип*: bool],
-
 
   [validate_brand],
   [Валидация поля бренд],
@@ -498,34 +494,41 @@
 // точка входа программы
 int main() {
     // устанавливаем локаль UTF-8 с поддержкой кириллицы
-    SetConsoleCP(CP_UTF8);
-    SetConsoleOutputCP(CP_UTF8);
+	SetConsoleCP(CP_UTF8);
+	SetConsoleOutputCP(CP_UTF8);
+
     // Выводим назначение программы
     printf("Назначение программы: Создание файлов на основе сведений, вводимых пользователем\n");
-    // Начинаем взаимодействие с пользователем.
+    
+	// Начинаем взаимодействие с пользователем.
     printf("Что требуется записать?\n1) Файл автомобильных сведений\n2) Файл регистрационных сведений\n");
     printf("q) Для завершения программы нажмите q.\n");
-    char input;
-    // Считываем и обрабатываем пользовательский ввод
-    while ((input = getchar()) != EOF) {
-        clear_stdin();
-        if (input == '1' || input == '2') {
-            if (input == '1') write_car_data();
+    
+	// Подключаем массив для буффера ввода
+	extern int BUFFER[256];
+
+	// Считываем и обрабатываем пользовательский ввод
+    while ((BUFFER[0] = getchar()) != EOF) {
+        fseek(stdin, 0, SEEK_END);
+        if (BUFFER[0] == '1' || BUFFER[0] == '2') {
+			system("cls");
+            if (BUFFER[0] == '1') write_car_data();
             else 
-            if (input == '2') write_license_data();
-        } else if (input == 'q' || input == 'Q') {
+            if (BUFFER[0] == '2') write_license_data();
+        } else if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') {
             break;
         }
         else printf("Данной опции не существует.\n");
-
-        printf("Желаете продолжить запись? (enter=Да/N=Нет)\n");
-        input = getchar();
-        if (input == 'N' || input == 'n') {
+		
+        printf("Желаете продолжить запись? (enter=Да/N=Нет)");
+        BUFFER[0] = getchar();
+        if (BUFFER[0] == 'N' || BUFFER[0] == 'n') {
             break;
         } else
-        if (input == '\n') {
+        if (BUFFER[0] == '\n') {
             printf("Введен enter, программа продолжает работу\n");
-        } else printf("Введен %c, программа продолжает работу\n", input);
+        } else printf("Введен %c, программа продолжает работу\n", BUFFER[0]);
+		system("cls");
 
         printf("Что требуется записать?\n1) Файл автомобильных сведений\n2) Файл регистрационных сведений\n");
         printf("q) Для завершения программы нажмите q.\n");
@@ -533,8 +536,8 @@ int main() {
 
     // Сообщаем пользователю о завершении программы и
     // ожидаем нажатие любой клавиши
-    printf("Нажмите любую клавишу для завершения программы...");
-    scanf("%c", &input);
+    printf("Нажмите любую клавишу для завершения программ.");
+    scanf("%c", &BUFFER[0]);
     printf("Программа завершена.\n");
     // Возвращаем ОС код успешного выполнения программы.
     return 0;
@@ -546,11 +549,12 @@ int main() {
 #ifndef FILE_HANDLER_HPP
 #define FILE_HANDLER_HPP
 
+#include <cstring> // библиотека для подключения memset
 #include <cstdio> // библиотека стандартного С ввода/вывода 
-#include <string> // библиотека для работы с "умными" строками
-#include <regex> // библиотека для работы с регулярными варажениями
 #include <cstdlib> // стандартная библиотека C
 #include <filesystem> // библиотека для работы с файловой системой (требует C++17)
+#include <regex> // библиотека для работы с регулярными варажениями
+#include <string> // библиотека для работы с "умными" строками
 #include <windows.h> // для изменения локали на машинах windows 
 
 // Структура для временного хранения автомобильных сведений
@@ -595,24 +599,17 @@ void write_license_data();
 ```cpp
 #include "file_handler.hpp"
 
-// основные стандартные параметры
-std::string DEFAULT_FILENAME_1 = "car_data.txt";
-std::string DEFAULT_FILENAME_2 = "license_data.txt";
-const int LOWER_BOUND_YEAR = 1960;
 
 // буффер ввода
 char BUFFER[256];
 
-// функция очистки потока ввода, 
-// fseek() не подходит, тк не работает под Linux
-void clear_stdin() {
-    int temp;
-    while ((temp = getchar()) != EOF && temp != '\n');
-}
+// Инициализируем основные стандартные параметры
+std::string DEFAULT_FILENAME_1 = "car_data.txt";
+std::string DEFAULT_FILENAME_2 = "license_data.txt";
+int LOWER_BOUND_YEAR = 1960;
 
 // Стоит отметить, что почти все функции валидации используют
 // регулярные выражения, сделано это для упрощения проверок
-
 
 // функция валидации имени файла
 bool validate_filename(std::string filename) {
@@ -688,11 +685,11 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     std::string file_name;
     printf("Введите название файла(enter=%s): ", default_file_name.c_str());
     while (scanf("%255[^\n]s", BUFFER)) {
-        clear_stdin();
+        fseek(stdin, 0, SEEK_END);
         file_name = BUFFER;
-        if (validate_filename(file_name)) {
-            break;
-        }
+		memset(BUFFER, 0xFF, 256);
+		BUFFER[0]='\0';
+        if (validate_filename(file_name)) break;
         else {
             printf("Введенное имя файла некорректно. Файл должен иметь вид file.txt, \n");
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
@@ -700,16 +697,13 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
-    if (file_name.size()==0) {
-        file_name = default_file_name;
-    }
+	if (file_name.size()==0) file_name = default_file_name;
     file_info.first = file_name;
     // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
     // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
-        printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?\n", file_name.c_str());
-        while ((BUFFER[0]=getchar()) != EOF) {
-            clear_stdin();
+        printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
+        while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
                 break;
@@ -720,7 +714,10 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             } else printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
         }
     } else file_info.second = "w";
-    return file_info;
+    fseek(stdin, 0, SEEK_END);
+	memset(BUFFER, 0xFF, 256);
+	BUFFER[0]='\0';
+	return file_info;
 }
 
 // функция записи автомобильных сведений в файл
@@ -750,10 +747,12 @@ void write_car_data() {
     while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
-            clear_stdin();
+			fseek(stdin, 0, SEEK_END);
+			memset(BUFFER, 0xFF, 256);
+			BUFFER[0]='\0';
             break;
         }
-        clear_stdin();
+		fseek(stdin, 0, SEEK_END);
         switch (field_index) {
             case 0: {
                 temp.brand.assign(BUFFER);
@@ -790,6 +789,8 @@ void write_car_data() {
             printf("Продолжаем запись сведений\n");
             temp = {};
             filled = false;
+			memset(BUFFER, 0xFF, 256);
+			BUFFER[0]='\0';
         }
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
@@ -824,10 +825,10 @@ void write_license_data() {
     while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
-            clear_stdin();
+			fseek(stdin, 0, SEEK_END);
             break;
         }
-        clear_stdin();
+		fseek(stdin, 0, SEEK_END);
         switch (field_index) {
             case 0: {
                 temp.license.assign(BUFFER);
@@ -878,8 +879,10 @@ void write_license_data() {
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
     fclose(file);
-    // clear stdin to ignore EOF
+    // очищаем поток от EOF
     clearerr(stdin);
+	memset(BUFFER, 0xFF, 256);
+	BUFFER[0]='\0';
     return;
 }
 ```
@@ -965,5 +968,5 @@ void write_license_data() {
   ]
 )
 
-В результате небольшого тестирования можно отметить, что программа
+В результате тестирования можно отметить, что программа
 функционирует корректно.

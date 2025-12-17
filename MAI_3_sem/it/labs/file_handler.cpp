@@ -1,23 +1,16 @@
 #include "file_handler.hpp"
 
-// основные стандартные параметры
-std::string DEFAULT_FILENAME_1 = "car_data.txt";
-std::string DEFAULT_FILENAME_2 = "license_data.txt";
-const int LOWER_BOUND_YEAR = 1960;
 
 // буффер ввода
 char BUFFER[256];
 
-// функция очистки потока ввода, 
-// fseek() не подходит, тк не работает под Linux
-void clear_stdin() {
-    int temp;
-    while ((temp = getchar()) != EOF && temp != '\n');
-}
+// Инициализируем основные стандартные параметры
+std::string DEFAULT_FILENAME_1 = "car_data.txt";
+std::string DEFAULT_FILENAME_2 = "license_data.txt";
+int LOWER_BOUND_YEAR = 1960;
 
 // Стоит отметить, что почти все функции валидации используют
 // регулярные выражения, сделано это для упрощения проверок
-
 
 // функция валидации имени файла
 bool validate_filename(std::string filename) {
@@ -93,10 +86,11 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     std::string file_name;
     printf("Введите название файла(enter=%s): ", default_file_name.c_str());
     while (scanf("%255[^\n]s", BUFFER)) {
+        fseek(stdin, 0, SEEK_END);
         file_name = BUFFER;
-        if (validate_filename(file_name)) {
-            break;
-        }
+		memset(BUFFER, 0xFF, 256);
+		BUFFER[0]='\0';
+        if (validate_filename(file_name)) break;
         else {
             printf("Введенное имя файла некорректно. Файл должен иметь вид file.txt, \n");
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
@@ -104,15 +98,13 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
-    if (file_name.size()==0) {
-        file_name = default_file_name;
-    }
+	if (file_name.size()==0) file_name = default_file_name;
     file_info.first = file_name;
     // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
     // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
-        printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?\n", file_name.c_str());
-        while ((BUFFER[0]=getchar()) != EOF) {
+        printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
+        while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
                 break;
@@ -123,8 +115,10 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             } else printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
         }
     } else file_info.second = "w";
-    clear_stdin();
-    return file_info;
+    fseek(stdin, 0, SEEK_END);
+	memset(BUFFER, 0xFF, 256);
+	BUFFER[0]='\0';
+	return file_info;
 }
 
 // функция записи автомобильных сведений в файл
@@ -154,10 +148,12 @@ void write_car_data() {
     while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
-            clear_stdin();
+			fseek(stdin, 0, SEEK_END);
+			memset(BUFFER, 0xFF, 256);
+			BUFFER[0]='\0';
             break;
         }
-        clear_stdin();
+		fseek(stdin, 0, SEEK_END);
         switch (field_index) {
             case 0: {
                 temp.brand.assign(BUFFER);
@@ -194,6 +190,8 @@ void write_car_data() {
             printf("Продолжаем запись сведений\n");
             temp = {};
             filled = false;
+			memset(BUFFER, 0xFF, 256);
+			BUFFER[0]='\0';
         }
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
@@ -228,10 +226,10 @@ void write_license_data() {
     while (scanf("%255[^\n]s", BUFFER) != EOF) {
         if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
             printf("Введен %s. Ввод сведений закончен\n", BUFFER);
-            clear_stdin();
+			fseek(stdin, 0, SEEK_END);
             break;
         }
-        clear_stdin();
+		fseek(stdin, 0, SEEK_END);
         switch (field_index) {
             case 0: {
                 temp.license.assign(BUFFER);
@@ -282,7 +280,9 @@ void write_license_data() {
         printf("Введите поле %s:\n", field_names[field_index].c_str());
     }
     fclose(file);
-    // clear stdin to ignore EOF
+    // очищаем поток от EOF
     clearerr(stdin);
+	memset(BUFFER, 0xFF, 256);
+	BUFFER[0]='\0';
     return;
 }

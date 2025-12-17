@@ -1,8 +1,10 @@
 all: main.o file_handler.o
-	g++ -g main.o file_handler.o -o file_h
+	g++ -g main.o file_handler.o -o file_h -static
 main.o: main.cpp
 	g++ -g -c main.cpp
 file_handler.o: file_handler.cpp
 	g++ -c file_handler.cpp -std=c++17
 clean:
-	rm -f *.o *.out *.exe *.txt
+	rm *.o
+	rm *.exe
+	rm *.txt
