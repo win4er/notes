@@ -13,3 +13,5 @@
 #include("paper-1.typ")
 #pagebreak()
 
+#include("paper-2.typ")
+#pagebreak()
