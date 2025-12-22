@@ -98,7 +98,7 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
-	if (file_name.size()==0) file_name = default_file_name;
+	if (file_name.size()==0 || BUFFER[0]=='\0') file_name = default_file_name;
     file_info.first = file_name;
     // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
     // как именно предстоит работать с ним.
@@ -157,6 +157,8 @@ void write_car_data() {
         switch (field_index) {
             case 0: {
                 temp.brand.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_brand(temp.brand))
                     field_index=(field_index+1)%3;
                 else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -164,6 +166,8 @@ void write_car_data() {
             }
             case 1: {
                 temp.model.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_model(temp.model))
                     field_index=(field_index+1)%3;
                 else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -171,10 +175,20 @@ void write_car_data() {
             }
             case 2: {
                 temp.license.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_license(temp.license)) {
                     field_index = (field_index+1)%3;
                     filled = true;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                } else {
+					printf("Поле введено некорректно, попробуйте еще раз\n");
+					printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
+					printf("Следующие 3 элемента это цифры: [0-9]\n");
+					printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
+					printf("Следующие 2-3 элемента это цифры: [0-9]\n");
+					printf("После всего этого следует строчка: RUS\n");
+					printf("Номерной знак не должен содержать никаких разделителей\n");
+				}
                 break;
             }
         }
@@ -233,13 +247,24 @@ void write_license_data() {
         switch (field_index) {
             case 0: {
                 temp.license.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
                 if (validate_license(temp.license)) {
                     field_index = (field_index+1)%4;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                } else {
+					printf("Поле введено некорректно, попробуйте еще раз\n");
+					printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
+					printf("Следующие 3 элемента это цифры: [0-9]\n");
+					printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
+					printf("Следующие 2-3 элемента это цифры: [0-9]\n");
+					printf("После всего этого следует строчка: RUS\n");
+					printf("Номерной знак не должен содержать никаких разделителей\n");
+				}
                 break;
             }
             case 1: {
                 temp.surname.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_surname(temp.surname)) {
                     field_index = (field_index+1)%4;
                 } else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -247,6 +272,8 @@ void write_license_data() {
             }
             case 2: {
                 temp.address.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_address(temp.address)) {
                     field_index = (field_index+1)%4;
                 } else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -254,6 +281,8 @@ void write_license_data() {
             }
             case 3: {
                 temp.release_year.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_release_year(temp.release_year)) {
                     field_index = (field_index+1)%4;
                     filled = true;
