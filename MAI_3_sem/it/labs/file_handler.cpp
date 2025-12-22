@@ -59,13 +59,16 @@ bool validate_release_year(std::string release_year) {
         printf("Введена пустая строка.\n");
         return false;
     }
-    for (int i=0; i<release_year.size(); ++i) {
+    int year=0;
+    int ten = 1;
+    for (int i=release_year.size()-1; i>=0; --i) {
         if (!isdigit(release_year[i])) {
             printf("Строка не полностью состоит из цифр.\n");
             return false;
         }
+        year += (release_year[i]-'0')*ten;
+        ten *= 10;
     }
-    int year=std::stoi(release_year);
     std::time_t t = std::time(nullptr);
     std::tm *const pTInfo = std::localtime(&t);
     int current_year = 1900 + pTInfo->tm_year;
@@ -104,6 +107,7 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
     // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
+        fseek(stdin, 0, SEEK_END);
         while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
