@@ -537,6 +537,7 @@ int main() {
     // Сообщаем пользователю о завершении программы и
     // ожидаем нажатие любой клавиши
     printf("Нажмите любую клавишу для завершения программ.");
+    fseek(stdin, 0, SEEK_END);
     scanf("%c", &BUFFER[0]);
     printf("Программа завершена.\n");
     // Возвращаем ОС код успешного выполнения программы.
@@ -658,13 +659,16 @@ bool validate_release_year(std::string release_year) {
         printf("Введена пустая строка.\n");
         return false;
     }
-    for (int i=0; i<release_year.size(); ++i) {
+    int year=0;
+    int ten = 1;
+    for (int i=release_year.size()-1; i>=0; --i) {
         if (!isdigit(release_year[i])) {
             printf("Строка не полностью состоит из цифр.\n");
             return false;
         }
+        year += (release_year[i]-'0')*ten;
+        ten *= 10;
     }
-    int year=std::stoi(release_year);
     std::time_t t = std::time(nullptr);
     std::tm *const pTInfo = std::localtime(&t);
     int current_year = 1900 + pTInfo->tm_year;
@@ -697,12 +701,13 @@ std::pair<std::string, std::string> file_info(std::string default_file_name) {
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
-	if (file_name.size()==0) file_name = default_file_name;
+	if (file_name.size()==0 || BUFFER[0]=='\0') file_name = default_file_name;
     file_info.first = file_name;
     // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
     // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
+        fseek(stdin, 0, SEEK_END);
         while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
@@ -756,6 +761,8 @@ void write_car_data() {
         switch (field_index) {
             case 0: {
                 temp.brand.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_brand(temp.brand))
                     field_index=(field_index+1)%3;
                 else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -763,6 +770,8 @@ void write_car_data() {
             }
             case 1: {
                 temp.model.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_model(temp.model))
                     field_index=(field_index+1)%3;
                 else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -770,10 +779,20 @@ void write_car_data() {
             }
             case 2: {
                 temp.license.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_license(temp.license)) {
                     field_index = (field_index+1)%3;
                     filled = true;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                } else {
+					printf("Поле введено некорректно, попробуйте еще раз\n");
+					printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
+					printf("Следующие 3 элемента это цифры: [0-9]\n");
+					printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
+					printf("Следующие 2-3 элемента это цифры: [0-9]\n");
+					printf("После всего этого следует строчка: RUS\n");
+					printf("Номерной знак не должен содержать никаких разделителей\n");
+				}
                 break;
             }
         }
@@ -832,13 +851,24 @@ void write_license_data() {
         switch (field_index) {
             case 0: {
                 temp.license.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
                 if (validate_license(temp.license)) {
                     field_index = (field_index+1)%4;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
+                } else {
+					printf("Поле введено некорректно, попробуйте еще раз\n");
+					printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
+					printf("Следующие 3 элемента это цифры: [0-9]\n");
+					printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
+					printf("Следующие 2-3 элемента это цифры: [0-9]\n");
+					printf("После всего этого следует строчка: RUS\n");
+					printf("Номерной знак не должен содержать никаких разделителей\n");
+				}
                 break;
             }
             case 1: {
                 temp.surname.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_surname(temp.surname)) {
                     field_index = (field_index+1)%4;
                 } else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -846,6 +876,8 @@ void write_license_data() {
             }
             case 2: {
                 temp.address.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_address(temp.address)) {
                     field_index = (field_index+1)%4;
                 } else printf("Поле введено некорректно, попробуйте еще раз\n");
@@ -853,6 +885,8 @@ void write_license_data() {
             }
             case 3: {
                 temp.release_year.assign(BUFFER);
+				memset(BUFFER, 0xFF, 256);
+				BUFFER[0]='\0';
                 if (validate_release_year(temp.release_year)) {
                     field_index = (field_index+1)%4;
                     filled = true;
