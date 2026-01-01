@@ -1,7 +1,7 @@
 #import "template.typ": *
 
 #set page(numbering: "1")
-//#show: template
+#show: template
 
 
 = Road to Red Team. Low-level understanding, first steps =)
@@ -25,11 +25,14 @@
 = Why?
 
 Потому что это база для понимания устройства компьютера КАМОН БЛЯТЬ...\
-Ботаем все по Таненбаума и АКОС МФТИ
+Ботаем все по книге Таненбаума и курсу АКОС МФТИ
 
 #pagebreak()
 
 = *Chapter I:* Introduction
+
+#hr
+#include("chapter-1.typ")
 
 #pagebreak()
 = *Chapter II:* Computer System Organization
