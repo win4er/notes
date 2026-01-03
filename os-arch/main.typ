@@ -1,37 +1,28 @@
-#import "template.typ": *
+#import "@preview/grape-suite:3.1.0": exercise
+#import exercise: project, task, subtask
 
-#set page(numbering: "1")
-#show: template
+#show: project.with(
+    title: "Computer Architecture and Operating Systems",
 
+    university: [MAI],
+    institute: [Robotics and Intelligent Systems],
+    seminar: [CAOS notes],
 
-= Road to Red Team. Low-level understanding, first steps =)
+    abstract: [
+      Здесь собраны записи по книге Таненбаума, а также курсу АКОС МФТИ.\
+      *Цель*: получить теоретические и практические знания в мире low-level
+      программирования, а также
+    ],
+    show-outline: true,
 
-#align(horizon)[
-  #figure(
-    image("assets/caop-logo.png", width: 185%),
-  )
-]
+    author: "Platon Nikitin",
 
-#pagebreak()
-
-#outline(
-  title: [Computer Architecture and Operating Systems]
+    show-solutions: false
 )
-
-#pagebreak()
-
-= Computer Architecture and Operating Systems
-
-= Why?
-
-Потому что это база для понимания устройства компьютера КАМОН БЛЯТЬ...\
-Ботаем все по книге Таненбаума и курсу АКОС МФТИ
-
 #pagebreak()
 
 = *Chapter I:* Introduction
 
-#hr
 #include("chapter-1.typ")
 
 #pagebreak()
