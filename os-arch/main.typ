@@ -3,11 +3,12 @@
 
 #show: project.with(
     title: "Computer Architecture and Operating Systems",
-
+    
     university: [MAI],
     institute: [Robotics and Intelligent Systems],
     seminar: [CAOS notes],
-
+  
+    text-font: "Hack",
     abstract: [
       Здесь собраны записи по книге Таненбаума, а также курсу АКОС МФТИ.\
       *Цель*: получить теоретические и практические знания в мире low-level
