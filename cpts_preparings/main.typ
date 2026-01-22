@@ -1,22 +1,33 @@
-#import "template.typ": *
+#import "@preview/grape-suite:3.1.0": exercise
+#import exercise: project, task, subtask
 
-#set page(numbering: "1")
-#show: template
+#show: project.with(
+    title: "ROAD TO BECOME A HACKER MASTERMIND",
+    
+    university: [MAI],
+    institute: [Robotics and Intelligent Systems],
+    seminar: [HTB Academy],
+    
+    text-font: "Segoe Print",
+    abstract: [
+      Данная часть репозитория направлена на подготовку
+      к сдаче экзамена CPTS, lets go мамкины хацкеры...
 
-
-= Road to Red Team. CPTS is first step
-
-#align(horizon)[
-  #figure(
-    image("assets/cpts-logo3.png", width: 100%),
-  )
-]
-
-#pagebreak()
-
-#outline(
-  title: [Содержание]
+      #align(horizon)[
+        #figure(
+          image("assets/cpts-logo3.png", width: 100%),
+        )
+      ]
+        
+      *Цель*: сдать экз. +получить первые навыки OffSec 
+    ],
+    show-outline: true,
+      
+    author: "Platon Nikitin",
+    
+    show-solutions: false
 )
+= Road to Red Team. CPTS is first step
 
 #pagebreak()
 
