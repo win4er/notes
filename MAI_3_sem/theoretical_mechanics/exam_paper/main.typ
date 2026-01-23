@@ -121,7 +121,8 @@ $ arrow.r(r_C) = (Sigma m_i arrow.r(r_i))/M, M = Sigma m_i $
 
 Свойства центра масс:
 + *НЕ ЗАВИСИТ* от выбора *СК (СИСТЕМЫ КООРДИНАТ)*
-+ Центр масс для 3-х точек:$ (m_1 arrow.r(r_1) + m_2 arrow.r(r_2) + m_3 arrow.r(r_3)) / (m_1 + m_2 + m_3) $
++ Центр масс для 3-х точек:
+  $ arrow.r(r_C) = (m_1 arrow.r(r_1) + m_2 arrow.r(r_2) + m_3 arrow.r(r_3)) / (m_1 + m_2 + m_3) $
 
 #figure(
   image("assets/fig2.png")
@@ -185,4 +186,77 @@ $ arrow.r(Q) = Sigma arrow.r(p_i) = Sigma m_i arrow.r(v_i) = M arrow.r(V_c) $
 #pagebreak()
 == ВОПРОС №5. Кинетический момент точки и механической системы относительно центра и оси. Теоремы об изменении кинетического момента точки и механической системы в движении относительно неподвижного центра и неподвижной оси. Следствия.
 
+Пусть $O$ -- какая-либо точка пространства (будем называть ее центром): неподвижная или совершающая
+произольное движение.
 
+*КИНЕТИЧЕСКИЙ МОМЕНТ ТОЧКИ:* $arrow.r(k_O) = [arrow.r(r), arrow.r(p)] = [arrow.r(r),m arrow.r(v)]$.
+*КИНЕТИЧЕСКИЙ МОМЕНТ СИСТЕМЫ:* $arrow.r(K_O) = Sigma arrow.r(k_O_i) = Sigma [arrow.r(r_i), m_i arrow.r(v_i)]$.
+*КИНЕТИЧЕСКИЙ МОМЕНТ ОТНОСИТЕЛЬНО ОСИ $O_z$:* $K_O_z = P r_O_z arrow.r(K_O)$.
+
+#rect()[
+  *ТЕОРЕМА ОБ ИЗМЕНЕНИИ КИНЕТИЧЕСКОГО МОМЕНТА*
+
+  *ТЕОРЕМА ДЛЯ СИСТЕМЫ ОТНОСИТЕЛЬНО ПОДВИЖНОГО ЦЕНТРА:*
+  $ dif(K_O)/dif(t) = M_O^((e)) + [M_v_c, v_0] $
+
+  *ТЕОРЕМА ДЛЯ СИСТЕМЫ ОТНОСИТЕЛЬНО НЕПОДВИЖНОГО ЦЕНТРА:*
+  $ dif(arrow.r(K_O))/dif(t) = arrow.r(M_O)^((e)) $
+
+  *ДОКАЗАТЕЛЬСТВО:*\
+  Для каждой точки: $dif(arrow.r(k_O_i))/dif(t)=[arrow.r(r_i), arrow.r(F_i)^((e))]+$[arrow.r(r_i), arrow.r(F_i)^((i))].
+  
+  Суммируя: $dif(arrow.r(K_O))/dif(t)=Sigma [arrow.r(r_i),arrow.r(F_i)^((e))] + Sigma [arrow.r(r_i), arrow.r(F_i)^((i))] = arrow.r(M_O)^((e)) + 0$.
+]
+#rect()[
+  *ТЕОРЕМА ДЛЯ ОСИ:*
+  $ dif(K_O_z)/dif(t) = M_O_z^((e)) $
+
+  *ДОКАЗАТЕЛЬСТВО:*\
+  Проектируем векторное уравнение на ось $O_z: P r_O_z (dif(arrow.r(K_O))/dif(t))=P r_O_z (arrow.r(M_O)^((e)))$.
+  Так как ось неподвижна, $d/dif(t) (P r_O_z arrow.r(K_O))=dif(K_O_z)/dif(t)$.
+  *СЛЕДСТВИЯ:*\
+  + Внутренние силы не влияют на $arrow.r(K_O)$.
+  + Если $arrow.r(M_O)^((e))=0$, то $arrow.r(K_O)="const"$.
+  + Если $(M_O_z)^((e))=0$, то $K_O_z="const"$.
+]
+
+#pagebreak()
+== ВОПРОС №7. Оси Кенига. Кинетический момент механической системы в движении относительно центра масс. Теорема об изменении кинетического момента механической системы в движении относительно центра масс.
+
+*ОСИ КЕНИГА:*
+-- Подвижная система координат с началом в центре масс $С$, оси перемещаются поступательно.
+
+#rect(width: 90%)[
+  *ТЕОРЕМА КЕНИГА ДЛЯ КИНЕТИЧЕСКОГО МОМЕНТА*
+  $ arrow.r(K_O)=[arrow.r(r_C), M_(arrow.r(v_C))]+arrow.r(K_C) $
+  *ДОКАЗАТЕЛЬСТВО:*
+  $ arrow.r(r_i) = arrow.r(r_C) + arrow.r(r_i), arrow.r(v_i) = arrow.r(v_C) + arrow.r(v_i) "Тогда:" $
+  $
+    arrow.r(K_O)=Sigma [arrow.r(r_C) + arrow.r(r_i), m_i (arrow.r(v_C) + arrow.r(v_i))] =
+    [arrow.r(r_C), M_(arrow.r(v_C))] + Sigma [arrow.r(r_i), m_i arrow.r(v_i)] = 
+    [arrow.r(r_C), M_(arrow.r(v_C))] + arrow.r(K_C) 
+  $
+]
+
+#rect(width: 90%)[
+  *ТЕОРЕМА ОБ ИЗМЕНЕНИИ $arrow.r(K_C)$:*
+  $ dif(arrow.r(K_C))/dif(t)=arrow.r(M_C)^((e)) $
+  #figure(
+    image("assets/fig3.png")
+  )
+
+  *ДОКАЗАТЕЛЬСТВО:*\
+  Из $dif(arrow.r(K_O))/dif(t)=arrow.r(M_O)^((e)) "и" arrow.r(K_O)=[arrow.r(r_C), M_(arrow.r(v_C)]+arrow.r(K_C) "получаем: "$
+  $ d/dif(t) ([arrow.r(r_C), M_(arrow.r(v_C))]) + dif(arrow.r(K_C))/dif(t) = arrow.r(M_O)^((e)) $
+  $ [arrow.r(v_C), M_(arrow.r(v_C)] + [arrow.r(r_C), M_(arrow.r(a_C))] + dif(arrow.r(K_C))/dif(t) = arrow.r(M_O)^((e)) $
+  $ 0 + [arrow.r(r_C), arrow.r(F)^((e))]+dif(arrow.r(K_C))/dif(t)=arrow.r(M_O)^((e)) $
+  $ dif(arrow.r(K_C))/dif(t)=arrow.r(M_C)^((e)) $
+  
+  $ arrow.r(r_C)=arrow.r(r_K)+arrow.r(rho_K) $
+]
+
+#pagebreak()
+== ВОПРОС №8. Дифференциальные уравнения плоскопараллельного движения твердого тела.
+
+*ПЛОСКОПАРАЛЛЕЛЬНОЕ ДВИЖЕНИЕ*
+-- сложное движение: поступательное со скоростью центра масс $C$ и вращательное вокруг $C$.
