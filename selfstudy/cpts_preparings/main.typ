@@ -1,6 +1,29 @@
 #import "@preview/grape-suite:3.1.0": exercise
 #import exercise: project, task, subtask
 
+#let style-number(number) = text(black)[#number |]
+
+#show raw.where(block: true):  it => grid(
+  columns: 2,
+  align: (right, left),
+  gutter: 0.5em,
+  ..it.lines
+    .enumerate()
+    .map(((i, line)) => (style-number(i + 1), line))
+    .flatten(),
+)
+
+#show raw.where(block: true): block.with(
+  fill: rgb(225, 200, 245),
+  inset: 4pt,
+  radius: 2pt,
+)
+
+#set table(
+  stroke: none,
+)
+
+
 #show: project.with(
     title: "ROAD TO BECOME A HACKER MASTERMIND",
     
@@ -27,9 +50,9 @@
     
     show-solutions: false
 )
-= Road to Red Team. CPTS is first step
 
 #pagebreak()
+= Road to Red Team. CPTS is first step
 
 = Why?
 
@@ -55,87 +78,5 @@
 = Chapter 1: CReconnaissance, Enumeration & Attack Planning
 
 == Network Enumeration with Nmap
+#include("network_nmap.typ")
 
-#pagebreak()
-== Footprinting
-
-#pagebreak()
-== Information Gathering
-
-#pagebreak()
-== Vulnerability Assessment
-
-#pagebreak()
-== File Transfers
-
-#pagebreak()
-== Shells & Payloads
-
-#pagebreak()
-== Using the Metasploit Framework
-
-
-#pagebreak()
-= Chapter II: Exploitation & Lateral Movement
-
-== Password Attacks
-
-#pagebreak()
-== Attacking Common Services
-
-#pagebreak()
-== Pivoting, Tunneling, and Port Forwarding
-
-#pagebreak()
-== Active Directory Enumeration && Attacks
-
-
-#pagebreak()
-= Chapter III: Web Exploitation
-
-== Using Web Proxies
-
-#pagebreak()
-== Attacking Web Applications with Ffuf
-
-#pagebreak()
-== Login Brute Forcing
-
-#pagebreak()
-== SQL Injection Fundamentals
-
-#pagebreak()
-== Cross-Site Scripting (XSS)
-
-#pagebreak()
-== File Inclusion
-
-#pagebreak()
-== File Upload Attacks
-
-#pagebreak()
-== Command Injections
-
-#pagebreak()
-== Web Attacks
-
-#pagebreak()
-== Attacking Common Applications
-
-
-#pagebreak()
-= Chapter IV: Post-Exploitation
-
-== Linux Privilege Escalation
-
-#pagebreak()
-== Windows Privilege Escalation
-
-
-#pagebreak()
-= Chapter V: Reporting & Capstone
-
-== Documentation & Reporting
-
-#pagebreak()
-== Attacking Enterprise Networks

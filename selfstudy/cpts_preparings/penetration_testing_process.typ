@@ -58,9 +58,9 @@ Pre-Engagement -- это этап документирования в письм
 
 Отсюда у нас есть только один путь:
 
-#set table(
-  stroke: none,
-)
+//#set table(
+//  stroke: none,
+//)
 
 #table(
   columns: (0.20fr, 0.80fr),
