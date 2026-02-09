@@ -31,17 +31,21 @@ struct LicenseData {
 void clear_stdin();
 
 // прототипы функций валидации
-bool validate_filename(std::string filename);
-bool validate_license(std::string license);
-bool validate_brand(std::string brand);
-bool validate_model(std::string model);
-bool validate_surname(std::string surname);
-bool validate_address(std::string address);
-bool validate_release_year(std::string release_year);
+bool validate_filename(const std::string& filename);
+bool validate_license(const std::string& license);
+bool validate_brand(const std::string& brand);
+bool validate_model(const std::string& model);
+bool validate_surname(const std::string& surname);
+bool validate_address(const std::string& address);
+bool validate_release_year(const std::string& release_year);
 
 // прототипы функций, связанных с работой с файлами
-std::pair<std::string, std::string> file_info(std::string default_filename);
-void write_car_data();
-void write_license_data();
+std::pair<std::string, std::string> file_info(
+    int* buffer,
+    const size_t& buf_size,
+    const std::string& default_filename
+);
+void write_car_data(char* buffer, const size_t& buf_size);
+void write_license_data(char* buffer, const size_t& buf_size);
 
 #endif

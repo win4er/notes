@@ -1,6 +1,5 @@
 #include "file_handler.hpp"
 
-
 // точка входа программы
 int main() {
     // устанавливаем локаль UTF-8 с поддержкой кириллицы
@@ -15,19 +14,17 @@ int main() {
     printf("q) Для завершения программы нажмите q.\n");
     
 	// Подключаем массив для буффера ввода
-	extern int BUFFER[256];
+    const size_t BUF_SIZE = 256;
+    char BUFFER[BUF_SIZE];
 
 	// Считываем и обрабатываем пользовательский ввод
     while ((BUFFER[0] = getchar()) != EOF) {
         fseek(stdin, 0, SEEK_END);
         if (BUFFER[0] == '1' || BUFFER[0] == '2') {
 			system("cls");
-            if (BUFFER[0] == '1') write_car_data();
-            else 
-            if (BUFFER[0] == '2') write_license_data();
-        } else if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') {
-            break;
-        }
+            if (BUFFER[0] == '1') write_car_data(&BUFFER[0], BUF_SIZE);
+            else if (BUFFER[0] == '2') write_license_data(&BUFFER[0], BUF_SIZE);
+        } else if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') break;
         else printf("Данной опции не существует.\n");
 		
         printf("Желаете продолжить запись? (enter=Да/N=Нет)");
@@ -44,12 +41,11 @@ int main() {
         printf("q) Для завершения программы нажмите q.\n");
     }
 
-    // Сообщаем пользователю о завершении программы и
-    // ожидаем нажатие любой клавиши
+    // Сообщаем пользователю о завершении программы и ожидаем нажатие любой клавиши
     printf("Нажмите любую клавишу для завершения программ.");
     fseek(stdin, 0, SEEK_END);
     scanf("%c", &BUFFER[0]);
     printf("Программа завершена.\n");
     // Возвращаем ОС код успешного выполнения программы.
-    return 0;
+    return EXIT_SUCCESS;
 }
