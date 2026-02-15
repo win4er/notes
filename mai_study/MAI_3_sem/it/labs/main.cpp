@@ -1,11 +1,10 @@
 #include "file_handler.hpp"
 
+
 // точка входа программы
 int main() {
     // устанавливаем локаль UTF-8 с поддержкой кириллицы
-	SetConsoleCP(CP_UTF8);
-	SetConsoleOutputCP(CP_UTF8);
-
+	setlocale(LC_ALL, "en_RU.UTF-8");
     // Выводим назначение программы
     printf("Назначение программы: Создание файлов на основе сведений, вводимых пользователем\n");
     
@@ -19,11 +18,11 @@ int main() {
 
 	// Считываем и обрабатываем пользовательский ввод
     while ((BUFFER[0] = getchar()) != EOF) {
-        fseek(stdin, 0, SEEK_END);
+		clear_stdin();
         if (BUFFER[0] == '1' || BUFFER[0] == '2') {
-			system("cls");
-            if (BUFFER[0] == '1') write_car_data(&BUFFER[0], BUF_SIZE);
-            else if (BUFFER[0] == '2') write_license_data(&BUFFER[0], BUF_SIZE);
+			system("clear");
+            if (BUFFER[0] == '1') write_data(&BUFFER[0], BUF_SIZE, 1);
+            else if (BUFFER[0] == '2') write_data(&BUFFER[0], BUF_SIZE, 2);
         } else if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') break;
         else printf("Данной опции не существует.\n");
 		
@@ -35,15 +34,15 @@ int main() {
         if (BUFFER[0] == '\n') {
             printf("Введен enter, программа продолжает работу\n");
         } else printf("Введен %c, программа продолжает работу\n", BUFFER[0]);
-		system("cls");
+		system("clear");
 
         printf("Что требуется записать?\n1) Файл автомобильных сведений\n2) Файл регистрационных сведений\n");
         printf("q) Для завершения программы нажмите q.\n");
     }
+	clear_stdin();
 
     // Сообщаем пользователю о завершении программы и ожидаем нажатие любой клавиши
     printf("Нажмите любую клавишу для завершения программ.");
-    fseek(stdin, 0, SEEK_END);
     scanf("%c", &BUFFER[0]);
     printf("Программа завершена.\n");
     // Возвращаем ОС код успешного выполнения программы.

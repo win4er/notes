@@ -7,7 +7,6 @@
 #include <filesystem> // библиотека для работы с файловой системой (требует C++17)
 #include <regex> // библиотека для работы с регулярными варажениями
 #include <string> // библиотека для работы с "умными" строками
-#include <windows.h> // для изменения локали на машинах windows 
 
 // Структура для временного хранения автомобильных сведений
 struct CarData {
@@ -45,7 +44,6 @@ std::pair<std::string, std::string> file_info(
     const size_t& buf_size,
     const std::string& default_filename
 );
-void write_car_data(char* buffer, const size_t& buf_size);
-void write_license_data(char* buffer, const size_t& buf_size);
+void write_data(char* buffer, const size_t& buf_size, const size_t& option);
 
 #endif

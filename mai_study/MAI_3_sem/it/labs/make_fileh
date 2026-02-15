@@ -5,6 +5,4 @@ main.o: main.cpp
 file_handler.o: file_handler.cpp
 	g++ -c file_handler.cpp -std=c++17
 clean:
-	rm *.o
-	rm *.exe
-	rm *.txt
+	rm file_h *.o *.txt

@@ -4,6 +4,11 @@
 std::string DEFAULT_FILENAME_1 = "car_data.txt";
 std::string DEFAULT_FILENAME_2 = "license_data.txt";
 
+void clear_stdin() {
+	int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
 // Стоит отметить, что почти все функции валидации используют
 // регулярные выражения, сделано это для упрощения проверок
 
@@ -35,7 +40,7 @@ bool validate_surname(const std::string& surname) {
 
 // функция валидации поля "адрес владельца"
 bool validate_address(const std::string& address) {
-    return regex_match(address, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9!_. ]+"));
+    return regex_match(address, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9_. ]+"));
 }
 
 // функция валидации поля "год выпуска"
@@ -80,14 +85,14 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
     std::string file_name;
     printf("Введите название файла(enter=%s): ", default_file_name.c_str());
     while (scanf("%255[^\n]s", BUFFER)) {
-        fseek(stdin, 0, SEEK_END);
-        file_name = BUFFER;
+		file_name = BUFFER;
         if (validate_filename(file_name)) break;
         else {
             printf("Введенное имя файла некорректно. Файл должен иметь вид file.txt, \n");
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
             printf("а после следует его расширение .txt\n");
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
+			clear_stdin();
         }
     }
 	if (file_name.size()==0 || BUFFER[0]=='\0') file_name = default_file_name;
@@ -96,8 +101,8 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
     // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
-        fseek(stdin, 0, SEEK_END);
-        while ((BUFFER[0] = getchar()) != EOF) {
+		clear_stdin();
+		while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
                 break;
@@ -108,13 +113,15 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
             } else printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
         }
     } else file_info.second = "w";
-    fseek(stdin, 0, SEEK_END);
+	clear_stdin();	
 	return file_info;
 }
 
-// функция записи автомобильных сведений в файл
-void write_car_data(char* BUFFER, const size_t& BUF_SIZE) {
-    std::pair<std::string, std::string> file_information = file_info(BUFFER, BUF_SIZE, DEFAULT_FILENAME_1);
+// функция для записи сведений в файл, 
+// option 1: car_data
+// option 2: license_data
+void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
+	std::pair<std::string, std::string> file_information = file_info(BUFFER, BUF_SIZE, DEFAULT_FILENAME_1);
     std::string file_name = file_information.first;
     FILE* file = std::fopen(file_name.c_str(), file_information.second.c_str());
     
@@ -126,163 +133,122 @@ void write_car_data(char* BUFFER, const size_t& BUF_SIZE) {
     printf("Файл %s успешно открыт для записи\n", file_name.c_str());
 
     int field_index=0;
-    CarData temp = {};
-    printf("Начинаем заполнять автомобильные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
-    std::string field_names[3] = {"бренд (символы: А-ЯЁа-яёA-Za-z0-9-_.! )", "модель (символы: А-ЯЁа-яёA-Za-z0-9-_.!() )", "номерной знак (пример: M976MM777RUS)"};
-    printf("Введите поле %s:\n", field_names[field_index].c_str());
-    int note_number = 0;
+	printf("Начинаем заполнять сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
+	int note_number = 0;
+	
+	const std::string mask = "%"+std::to_string(BUF_SIZE-1)+"[^\n]s";
+	
+	if (option == 1) {
+		CarData temp = {};
+		std::string field_names[3] = {"бренд (символы: А-ЯЁа-яёA-Za-z0-9-_.! )", "модель (символы: А-ЯЁа-яёA-Za-z0-9-_.!() )", "номерной знак (пример: M976MM777RUS)"};
+		printf("Введите поле %s:\n", field_names[field_index].c_str());
 
-    // Ниже идет последовательная запись полей и соответствующих им записей в файл
-    // Если поле не проходит валидацию, то оно не будет занесено в файл, 
-    // пока не пройдет валидацию.
-    const std::string mask = "%"+std::to_string(BUF_SIZE-1)+"[^\n]s";
-    while (scanf(mask.c_str(), BUFFER) != EOF) {
-        if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
-            printf("Введен %s. Ввод сведений закончен\n", BUFFER);
-			fseek(stdin, 0, SEEK_END);
-            break;
-        }
-		fseek(stdin, 0, SEEK_END);
-        switch (field_index) {
-            case 0: {
-                temp.brand.assign(BUFFER);
-                if (validate_brand(temp.brand))
-                    field_index=(field_index+1)%3;
-                else printf("Поле введено некорректно, попробуйте еще раз\n");
-                break;
-            }
-            case 1: {
-                temp.model.assign(BUFFER);
-                if (validate_model(temp.model))
-                    field_index=(field_index+1)%3;
-                else printf("Поле введено некорректно, попробуйте еще раз\n");
-                break;
-            }
-            case 2: {
-                temp.license.assign(BUFFER);
-                if (validate_license(temp.license)) {
-                    field_index = (field_index+1)%3;
-                } else {
-					printf("Поле введено некорректно, попробуйте еще раз\n");
-					printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
-					printf("Следующие 3 элемента это цифры: [0-9]\n");
-					printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
-					printf("Следующие 2-3 элемента это цифры: [0-9]\n");
-					printf("После всего этого следует строчка: RUS\n");
-					printf("Номерной знак не должен содержать никаких разделителей\n");
+		while (scanf(mask.c_str(), BUFFER) != EOF) {
+			clear_stdin();
+			if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
+				printf("Введен %s. Ввод сведений закончен\n", BUFFER);
+				break;
+			}
+			switch (field_index) {
+				case 0: {
+					temp.brand.assign(BUFFER);
+					if (validate_brand(temp.brand))
+						field_index=(field_index+1)%3;
+					else printf("Поле введено некорректно, попробуйте еще раз\n");
+					break;
 				}
-                break;
-            }
-            default: {
-                fprintf(file, "%s %s %s\n", temp.brand.c_str(), temp.model.c_str(), temp.license.c_str());
-                printf(
-                    "Запись #%d завершена:\nбренд: %s\nмодель: %s\nномерной знак: %s\n",
-                    ++note_number,
-                    temp.brand.c_str(),
-                    temp.model.c_str(),
-                    temp.license.c_str()
-                );
-                printf("Продолжаем запись сведений\n");
-                temp = {};
-                break;
-            }
-        }
-            
-        printf("Введите поле %s:\n", field_names[field_index].c_str());
-    }
+				case 1: {
+					temp.model.assign(BUFFER);
+					if (validate_model(temp.model))
+						field_index=(field_index+1)%3;
+					else printf("Поле введено некорректно, попробуйте еще раз\n");
+					break;
+				}
+				case 2: {
+					temp.license.assign(BUFFER);
+					if (validate_license(temp.license)) {
+						field_index = (field_index+1)%3;
+						fprintf(file, "%s %s %s\n", temp.brand.c_str(), temp.model.c_str(), temp.license.c_str());
+						printf(
+							"Запись #%d завершена:\nбренд: %s\nмодель: %s\nномерной знак: %s\n",
+							++note_number,
+							temp.brand.c_str(),
+							temp.model.c_str(),
+							temp.license.c_str()
+						);
+						printf("Продолжаем запись сведений\n");
+						temp = {};
+					} else {
+						printf("Поле введено некорректно, попробуйте еще раз\n");
+						printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
+						printf("Следующие 3 элемента это цифры: [0-9]\n");
+						printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
+						printf("Следующие 2-3 элемента это цифры: [0-9]\n");
+						printf("После всего этого следует строчка: RUS\n");
+						printf("Номерной знак не должен содержать никаких разделителей\n");
+					}
+					break;
+				}
+			}
+			printf("Введите поле %s:\n", field_names[field_index].c_str());
+		}
+	}
+	else if (option == 2) { 
+		CarData temp = {};
+		std::string field_names[3] = {"бренд (символы: А-ЯЁа-яёA-Za-z0-9-_.! )", "модель (символы: А-ЯЁа-яёA-Za-z0-9-_.!() )", "номерной знак (пример: M976MM777RUS)"};
+		printf("Введите поле %s:\n", field_names[field_index].c_str());
+
+		while (scanf(mask.c_str(), BUFFER) != EOF) {
+			clear_stdin();
+			if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
+				printf("Введен %s. Ввод сведений закончен\n", BUFFER);
+				break;
+			}
+			switch (field_index) {
+				case 0: {
+					temp.brand.assign(BUFFER);
+					if (validate_brand(temp.brand))
+						field_index=(field_index+1)%3;
+					else printf("Поле введено некорректно, попробуйте еще раз\n");
+					break;
+				}
+				case 1: {
+					temp.model.assign(BUFFER);
+					if (validate_model(temp.model))
+						field_index=(field_index+1)%3;
+					else printf("Поле введено некорректно, попробуйте еще раз\n");
+					break;
+				}
+				case 2: {
+					temp.license.assign(BUFFER);
+					if (validate_license(temp.license)) {
+						field_index = (field_index+1)%3;
+						fprintf(file, "%s %s %s\n", temp.brand.c_str(), temp.model.c_str(), temp.license.c_str());
+						printf(
+							"Запись #%d завершена:\nбренд: %s\nмодель: %s\nномерной знак: %s\n",
+							++note_number,
+							temp.brand.c_str(),
+							temp.model.c_str(),
+							temp.license.c_str()
+						);
+						printf("Продолжаем запись сведений\n");
+						temp = {};
+					} else {
+						printf("Поле введено некорректно, попробуйте еще раз\n");
+						printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
+						printf("Следующие 3 элемента это цифры: [0-9]\n");
+						printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
+						printf("Следующие 2-3 элемента это цифры: [0-9]\n");
+						printf("После всего этого следует строчка: RUS\n");
+						printf("Номерной знак не должен содержать никаких разделителей\n");
+					}
+					break;
+				}
+			}
+			printf("Введите поле %s:\n", field_names[field_index].c_str());
+		}
+	}
     fclose(file);
     // Здесь происходит очистка потока ввода от EOF
     clearerr(stdin);
-    return;
-}
-
-// функция записи регистрационных сведений в файл
-// она польностью аналогична функции write_car_data(),
-// лишь за тем исключением что записывает другие поля
-void write_license_data(char* BUFFER, const size_t& BUF_SIZE) {
-    std::pair<std::string, std::string> file_information = file_info(BUFFER, BUF_SIZE, DEFAULT_FILENAME_2);
-    std::string file_name = file_information.first;
-    FILE* file = std::fopen(file_name.c_str(), file_information.second.c_str());
-    
-    if (!file) {
-        printf("Не удалось открыть файл %s\n", file_name.c_str());
-        return;
-    }
-    printf("Файл %s успешно открыт для записи\n", file_name.c_str());
-
-    int field_index=0;
-    static LicenseData temp = {};
-
-    printf("Начинаем заполнять регистрационные сведения.\nДля завершения ввода нажмите 'Q' либо 'q'.\n");
-    std::string field_names[4] = {"номерной знак (пример: M976MM777RUS)", "фамилия владельца (символы: А-ЯЁа-яёA-Za-z)", "адрес владельца (символы: A-Za-zА-ЯЁа-яё0-9!_-. )", "год выпуска (символы: 0-9)"};
-    printf("Введите поле %s:\n", field_names[field_index].c_str());
-    int note_number = 0;
-    const std::string mask = "%"+std::to_string(BUF_SIZE-1)+"[^\n]s";
-    while (scanf(mask.c_str(), BUFFER) != EOF) {
-        if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
-            printf("Введен %s. Ввод сведений закончен\n", BUFFER);
-			fseek(stdin, 0, SEEK_END);
-            break;
-        }
-		fseek(stdin, 0, SEEK_END);
-        switch (field_index) {
-            case 0: {
-                temp.license.assign(BUFFER);
-                if (validate_license(temp.license)) {
-                    field_index = (field_index+1)%4;
-                } else {
-					printf("Поле введено некорректно, попробуйте еще раз\n");
-					printf("Первый элемент должен быть 1 из [ABEKMHOPCTYX],\n");
-					printf("Следующие 3 элемента это цифры: [0-9]\n");
-					printf("Следующие 2 элемента должны быть из [ABEKMHOPCTYX]\n");
-					printf("Следующие 2-3 элемента это цифры: [0-9]\n");
-					printf("После всего этого следует строчка: RUS\n");
-					printf("Номерной знак не должен содержать никаких разделителей\n");
-				}
-                break;
-            }
-            case 1: {
-                temp.surname.assign(BUFFER);
-                if (validate_surname(temp.surname)) {
-                    field_index = (field_index+1)%4;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
-                break;
-            }
-            case 2: {
-                temp.address.assign(BUFFER);
-                if (validate_address(temp.address)) {
-                    field_index = (field_index+1)%4;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
-                break;
-            }
-            case 3: {
-                temp.release_year.assign(BUFFER);
-                if (validate_release_year(temp.release_year)) {
-                    field_index = (field_index+1)%4;
-                } else printf("Поле введено некорректно, попробуйте еще раз\n");
-                break;
-            }
-            default: {
-                fprintf(file, "%s %s %s %s\n", temp.license.c_str(), temp.surname.c_str(), temp.address.c_str(), temp.release_year.c_str());
-                printf(
-                    "Запись #%d завершена:\nномерной знак: %s\nфамилия владельца: %s\nадрес: %s\nгод выпуска: %s\n",
-                    ++note_number,
-                    temp.license.c_str(),
-                    temp.surname.c_str(),
-                    temp.address.c_str(),
-                    temp.release_year.c_str()
-                );
-            
-                printf("Продолжаем запись сведений\n");
-                temp = {};
-                break;
-            }
-        }
-            
-        printf("Введите поле %s:\n", field_names[field_index].c_str());
-    }
-    fclose(file);
-    // очищаем поток от EOF
-    clearerr(stdin);
-    return;
 }
