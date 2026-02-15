@@ -156,7 +156,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 			break;
 		}
 		switch (field_index) {
-		case 0: {
+		case 0:
 			if (option == 1) {
 				temp_1.brand.assign(BUFFER);
 				if (validate_brand(temp_1.brand))
@@ -177,8 +177,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 				}
 			}
 			break;
-		}
-		case 1: {
+		case 1:
 			if (option == 1) {
 				temp_1.model.assign(BUFFER);
 				if (validate_model(temp_1.model)) {
@@ -194,8 +193,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 			}
 			printf("Поле введено некорректно, попробуйте еще раз\n");
 			break;
-		}
-		case 2: {
+		case 2:
 			if (option == 1) {
 				temp_1.license.assign(BUFFER);
 				if (validate_license(temp_1.license)) {
@@ -230,8 +228,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 				else printf("Поле введено некорректно, попробуйте еще раз\n");
 			}
 			break;
-		}
-		case 3: {
+		case 3:
 			temp_2.release_year.assign(BUFFER);
 			if (validate_release_year(temp_2.release_year))
 				field_index = (field_index+1)%4;
@@ -253,7 +250,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 			printf("Продолжаем запись сведений\n");
 			temp_2 = {};
 			break;
-		}}
+		}
 		if (option == 1)
 			printf("Введите поле %s:\n", field_names_1[field_index].c_str());
 		else if (option == 2)
