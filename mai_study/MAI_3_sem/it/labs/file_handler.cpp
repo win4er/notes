@@ -76,6 +76,7 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
     std::string file_name;
     printf("Введите название файла(enter=%s): ", default_file_name.c_str());
     while (scanf("%255[^\n]s", BUFFER)) {
+		clear_stdin();
 		file_name = BUFFER;
         if (validate_filename(file_name)) break;
         else {
@@ -83,7 +84,6 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
             printf("а после следует его расширение .txt\n");
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
-			clear_stdin();
         }
     }
 	if (file_name.size()==0 || BUFFER[0]=='\0') file_name = default_file_name;
@@ -101,10 +101,12 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
             if (BUFFER[0] == 'n' || BUFFER[0] == 'N') {
                 file_info.second = "w";
                 break;
-            } else printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
+            } else {
+				printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
+				clear_stdin();
+			}
         }
     } else file_info.second = "w";
-	clear_stdin();	
 	return file_info;
 }
 
