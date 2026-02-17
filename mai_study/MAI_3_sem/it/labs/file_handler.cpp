@@ -86,24 +86,27 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
         }
     }
-	if (file_name.size()==0 || BUFFER[0]=='\0') file_name = default_file_name;
+	if (file_name.size()==0 || BUFFER[0]=='\0') {
+		file_name = default_file_name;
+		clear_stdin();
+	}
     file_info.first = file_name;
     // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
     // как именно предстоит работать с ним.
     if (std::filesystem::exists(file_name)) {
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
-		clear_stdin();
 		while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
                 file_info.second = "a";
                 break;
-            } else
-            if (BUFFER[0] == 'n' || BUFFER[0] == 'N') {
-                file_info.second = "w";
-                break;
             } else {
-				printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
 				clear_stdin();
+				if (BUFFER[0] == 'n' || BUFFER[0] == 'N') {
+					file_info.second = "w";
+					break;
+				} else {
+					printf("Введено '%c' можно ввести только enter или N\n", BUFFER[0]);
+				}
 			}
         }
     } else file_info.second = "w";
@@ -114,7 +117,12 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
 //	option 1: car_data
 //	option 2: license_data
 void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
-	std::pair<std::string, std::string> file_information = file_info(BUFFER, BUF_SIZE, DEFAULT_FILENAME_1);
+	std::pair<std::string, std::string> file_information;
+	
+	if (option == 1)
+		file_information = file_info(BUFFER, BUF_SIZE, DEFAULT_FILENAME_1);
+	else if (option == 2)
+		file_information = file_info(BUFFER, BUF_SIZE, DEFAULT_FILENAME_2);
     std::string file_name = file_information.first;
     FILE* file = std::fopen(file_name.c_str(), file_information.second.c_str());
     
@@ -230,25 +238,26 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 			break;
 		case 3:
 			temp_2.release_year.assign(BUFFER);
-			if (validate_release_year(temp_2.release_year))
+			if (validate_release_year(temp_2.release_year)) {
 				field_index = (field_index+1)%4;
+				fprintf(file, "%s %s %s %s\n",
+					temp_2.license.c_str(),
+					temp_2.surname.c_str(),
+					temp_2.address.c_str(),
+					temp_2.release_year.c_str()
+				);
+				printf(
+					"Запись #%d завершена:\nномерной знак: %s\nфамилия владельца: %s\nадрес: %s\nгод выпуска: %s\n",
+					++note_number,
+					temp_2.license.c_str(),
+					temp_2.surname.c_str(),
+					temp_2.address.c_str(),
+					temp_2.release_year.c_str()
+				);
+				printf("Продолжаем запись сведений\n");
+				temp_2 = {};
+			}
 			else printf("Поле введено некорректно, попробуйте еще раз\n");
-			fprintf(file, "%s %s %s %s\n",
-				temp_2.license.c_str(),
-				temp_2.surname.c_str(),
-				temp_2.address.c_str(),
-				temp_2.release_year.c_str()
-			);
-			printf(
-				"Запись #%d завершена:\nномерной знак: %s\nфамилия владельца: %s\nадрес: %s\nгод выпуска: %s\n",
-				++note_number,
-				temp_2.license.c_str(),
-				temp_2.surname.c_str(),
-				temp_2.address.c_str(),
-				temp_2.release_year.c_str()
-			);
-			printf("Продолжаем запись сведений\n");
-			temp_2 = {};
 			break;
 		}
 		if (option == 1)
