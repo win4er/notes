@@ -96,3 +96,77 @@ $
 ]
 
 Дальше будет формула для корней из единицы
+
+#pagebreak()
+= ПЗ №2.
+
+$ root(n, z) = root(n, |z|) (cos (phi / n + 2 pi k) + i sin (phi / n + 2 pi k)), k in underbrace({0, +1, +2 ...}, n " штук") $
+
+#task[Считаем корни n степени][
+
+  $1+i = sqrt(2) (cos(pi/4)+i sin(pi/4))$
+
+  $root(3, 1+i) = root(3,sqrt(2)) (cos(pi/4+2 pi k)/3 + i sin(pi/4+2 pi k)/3), k = 0;1;2$
+
+  Дальше мы подставляли k и считали $w_k$, а затем построили 
+  окружность на декартовой плоскости и расположили эти корни, 
+  в конспекте по ЛК была данная иллюстрация.
+
+  $ root(4, 1)=root(4, |1|) (cos (0+2 pi k)/4 +i sin (0+2 pi k)/4) =
+    cases(
+      1 dot.op (cos 0/4 + i sin 0/4) = 1,
+      1 dot.op (cos pi/2 + i sin pi/2) = i,
+      1 dot.op (cos pi + i sin pi) = -1,
+      1 dot.op (cos (3 pi)/2 + i sin (3 pi)/2) = -i,
+    )
+  $
+]
+
+#task[$z^2-4 z + 4 - 2 i = 0$][
+  $x^2 +p x + q = 0$\
+  $x_(1,2) = -p/2 plus.minus sqrt((p/2)^2-q)$\
+  $z_(1,2) = 2 plus.minus sqrt(4-(4-2 i)) = 2 + sqrt(2 i)$
+
+  $sqrt(2 i) = sqrt(1^2 + 2 dot.op 1 dot.op i + i^2) = 1+i =\
+  = w_o = sqrt(2) (sqrt(2)/2 + i sqrt(2)/2)\
+  w_1 = sqrt(2) (cos (5 pi)/4 + i sin (5 pi)/4)
+  $
+]
+
+== Мнимая и Действительная части функции ТФКП
+Вообще это очевидно, но все же ...
+
+$w = f(z) = f(x+i y)$\
+$u + i v = f(x+i y)$
+
+Пара полезных формул
+
+#rect[
+  $ cos(i z) = "ch" z $
+  $ sin(i z) = i "sh" z $
+  $ "ch"(i z) = cos z $
+]
+
+#pagebreak()
+#task[$w=cos z = cos (x+i y)$][
+  $w = cos(x+i y) = cos x dot.op cos(i y) - sin x dot.op sin(i y) = 
+  cos x dot.op "ch" y - i sin x dot.op "sh" y\
+  
+  Re w = cos x dot.op "ch" y\
+  Im w = sin x dot.op "sh" y
+  $
+]
+
+#task[$w=e^z (z = 3 + pi/2)$][
+  $e^(3+i pi/2) = e^3 dot.op e^(i pi/2) = e^3 dot.op i\
+  e^(i pi/2) = cos pi/2 + i sin pi/2 = 0 + i\
+
+  "ch" (i pi/4) = cos pi/4 = sqrt(2)/2
+  $
+]
+
+#task[$sin(i ln 3)=$][
+  $sin(i ln 3) = i "sh" (ln 3) = i (e^(ln 3)-e^(ln 3))/2
+  = i (3-1/3)/2 = i (8/3)/2 = i 4/3
+  $
+]
