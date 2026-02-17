@@ -28,6 +28,7 @@ int main() {
 		
         printf("Желаете продолжить запись? (enter=Да/N=Нет)");
         BUFFER[0] = getchar();
+		clear_stdin();
         if (BUFFER[0] == 'N' || BUFFER[0] == 'n') {
             break;
         } else
