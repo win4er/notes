@@ -261,9 +261,9 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 			break;
 		}
 		if (option == 1)
-			printf("Введите поле %s:\n", field_names_1[field_index].c_str());
+			printf("\nВведите поле %s:\n", field_names_1[field_index].c_str());
 		else if (option == 2)
-			printf("Введите поле %s:\n", field_names_2[field_index].c_str());
+			printf("\nВведите поле %s:\n", field_names_2[field_index].c_str());
 	}
     fclose(file);
     clearerr(stdin); // Здесь происходит очистка потока ввода от EOF
