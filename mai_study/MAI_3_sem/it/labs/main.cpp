@@ -18,7 +18,7 @@ int main() {
 
 	// Считываем и обрабатываем пользовательский ввод
     while ((BUFFER[0] = getchar()) != EOF) {
-		clear_stdin();
+		__fpurge(stdin);
         if (BUFFER[0] == '1' || BUFFER[0] == '2') {
 			system("clear");
             if (BUFFER[0] == '1') write_data(&BUFFER[0], BUF_SIZE, 1);
@@ -28,7 +28,7 @@ int main() {
 		
         printf("Желаете продолжить запись? (enter=Да/N=Нет)");
         BUFFER[0] = getchar();
-		clear_stdin();
+		__fpurge(stdin);
         if (BUFFER[0] == 'N' || BUFFER[0] == 'n') {
             break;
         } else

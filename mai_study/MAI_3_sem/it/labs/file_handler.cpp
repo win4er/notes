@@ -4,11 +4,6 @@
 std::string DEFAULT_FILENAME_1 = "car_data.txt";
 std::string DEFAULT_FILENAME_2 = "license_data.txt";
 
-void clear_stdin() {
-	int c;
-    while ((c = getchar()) != '\n' && c != EOF);
-}
-
 // функция валидации имени файла
 bool validate_filename(const std::string& filename) {
     return std::regex_match(filename, std::regex("[a-zA-Z0-9_-]+\\.txt"));
@@ -71,12 +66,12 @@ bool validate_release_year(const std::string& release_year) {
 }
 
 // функция для определения имени и режима открытия файла
-std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZE, const std::string& default_file_name) {
+std::pair<std::string, std::string> file_info(char* BUFFER, const size_t& BUF_SIZE, const std::string& default_file_name) {
     std::pair<std::string, std::string> file_info;
     std::string file_name;
     printf("Введите название файла(enter=%s): ", default_file_name.c_str());
     while (scanf("%255[^\n]s", BUFFER)) {
-		clear_stdin();
+		__fpurge(stdin);
 		file_name = BUFFER;
         if (validate_filename(file_name)) break;
         else {
@@ -84,12 +79,11 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
             printf("где file состоит из латинских символов, дефиса(-) или нижнего подчеркивания(_),\n");
             printf("а после следует его расширение .txt\n");
             printf("Введите название файла(enter=%s): ", default_file_name.c_str());
+			file_name = default_file_name;
         }
     }
-	if (file_name.size()==0 || BUFFER[0]=='\0') {
-		file_name = default_file_name;
-		clear_stdin();
-	}
+	__fpurge(stdin);
+	if (file_name.size()==0) file_name = default_file_name;
     file_info.first = file_name;
     // Дальше идет проверка существует ли данный файл, если да, то необходимо спросить у пользователя,
     // как именно предстоит работать с ним.
@@ -100,7 +94,7 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t BUF_SIZ
                 file_info.second = "a";
                 break;
             } else {
-				clear_stdin();
+				__fpurge(stdin);
 				if (BUFFER[0] == 'n' || BUFFER[0] == 'N') {
 					file_info.second = "w";
 					break;
@@ -158,7 +152,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 		printf("Введите поле %s:\n", field_names_2[field_index].c_str());
 		
 	while (scanf(mask.c_str(), BUFFER) != EOF) {
-		clear_stdin();
+		__fpurge(stdin);
 		if ((BUFFER[0]=='Q' || BUFFER[0] == 'q') && BUFFER[1] == '\0') {
 			printf("Введен %s. Ввод сведений закончен\n", BUFFER);
 			break;
