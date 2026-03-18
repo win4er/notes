@@ -1,46 +1,68 @@
 #include "file_handler.hpp"
+#include <clocale>
 
-
-// точка входа программы
 int main() {
-    // устанавливаем локаль UTF-8 с поддержкой кириллицы
-	setlocale(LC_ALL, "en_RU.UTF-8");
-    // Выводим назначение программы
-    printf("Назначение программы: Создание файлов на основе сведений, вводимых пользователем\n");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     
-	// Начинаем взаимодействие с пользователем.
-    printf("Что требуется записать?\n1) Файл автомобильных сведений\n2) Файл регистрационных сведений\n");
-    printf("q) Для завершения программы нажмите q.\n");
+    printf("═══════════════════════════════════\n");
+    printf("   ПРОГРАММА ДЛЯ СОЗДАНИЯ ФАЙЛОВ  \n");
+    printf("═══════════════════════════════════\n\n");
     
-	// Подключаем массив для буффера ввода
-    const size_t BUF_SIZE = 256;
+    const size_t BUF_SIZE = 512;
     char BUFFER[BUF_SIZE];
 
-	// Считываем и обрабатываем пользовательский ввод
-    while ((BUFFER[0] = getchar()) != EOF) {
-		__fpurge(stdin);
-        if (BUFFER[0] == '1' || BUFFER[0] == '2') {
-			system("clear");
-            if (BUFFER[0] == '1') write_data(&BUFFER[0], BUF_SIZE, 1);
-            else if (BUFFER[0] == '2') write_data(&BUFFER[0], BUF_SIZE, 2);
-        } else if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') break;
-        else printf("Данной опции не существует.\n");
-		
-        printf("Желаете продолжить запись? (enter=Да/N=Нет)");
-        BUFFER[0] = getchar();
-		__fpurge(stdin);
-        if (BUFFER[0] == 'N' || BUFFER[0] == 'n') {
+	printf("\n");
+    printf("┌─────────────────────────────┐\n");
+    printf("│         ГЛАВНОЕ МЕНЮ        │\n");
+    printf("├─────────────────────────────┤\n");
+    printf("│ 1) Автомобильные данные     │\n");
+    printf("│ 2) Регистрационные данные   │\n");
+    printf("│ q) Выход                    │\n");
+    printf("└─────────────────────────────┘\n");
+    printf("Выбор: ");
+    fflush(stdout);
+    
+    while (fgets(BUFFER, BUF_SIZE, stdin) != nullptr) {
+        __fpurge(stdin);
+        BUFFER[strcspn(BUFFER, "\n")] = 0;
+        
+        if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') {
             break;
-        } else
-        if (BUFFER[0] == '\n') {
-            printf("Введен enter, программа продолжает работу\n");
-        } else printf("Введен %c, программа продолжает работу\n", BUFFER[0]);
-		system("clear");
-
-        printf("Что требуется записать?\n1) Файл автомобильных сведений\n2) Файл регистрационных сведений\n");
-        printf("q) Для завершения программы нажмите q.\n");
+        }
+        else if (BUFFER[0] == '1' || BUFFER[0] == '2') {
+            printf("\n═══════════════════════════════════\n");
+            printf("   %s\n", BUFFER[0] == '1' ? "АВТОМОБИЛЬНЫЕ ДАННЫЕ" : "РЕГИСТРАЦИОННЫЕ ДАННЫЕ");
+            printf("═══════════════════════════════════\n");
+            printf("* 'q' - выход из ввода\n");
+            printf("* 'menu' - возврат в меню\n\n");
+            fflush(stdout);
+            
+            write_data(BUFFER, BUF_SIZE, BUFFER[0] - '0');
+            __fpurge(stdin);
+            
+            printf("\nНажмите Enter...");
+            fflush(stdout);
+            getchar();
+            __fpurge(stdin);
+        }
+        else {
+            printf("Ошибка: введите 1, 2 или q\n");
+            fflush(stdout);
+        }
+        
+		printf("\n");
+        printf("┌─────────────────────────────┐\n");
+        printf("│         ГЛАВНОЕ МЕНЮ        │\n");
+        printf("├─────────────────────────────┤\n");
+        printf("│ 1) Автомобильные данные     │\n");
+        printf("│ 2) Регистрационные данные   │\n");
+        printf("│ q) Выход                    │\n");
+        printf("└─────────────────────────────┘\n");
+        printf("Выбор: ");
+        fflush(stdout);
     }
-    printf("Программа завершена.\n");
-    // Возвращаем ОС код успешного выполнения программы.
-    return EXIT_SUCCESS;
+    
+    printf("\nПрограмма завершена.\n");
+    fflush(stdout);
+    return 0;
 }
