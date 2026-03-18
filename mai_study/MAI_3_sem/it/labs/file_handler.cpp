@@ -73,6 +73,9 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t& BUF_SI
     while (scanf("%255[^\n]s", BUFFER)) {
 		__fpurge(stdin);
 		file_name = BUFFER;
+		if (file_name == "q" || file_name == "Q") {
+			break;
+		}
         if (validate_filename(file_name)) break;
         else {
             printf("Введенное имя файла некорректно. Файл должен иметь вид file.txt, \n");
@@ -91,11 +94,13 @@ std::pair<std::string, std::string> file_info(char* BUFFER, const size_t& BUF_SI
         printf("Файл %s уже существует.\nЖелаете продолжить запись вместо заполнения с начала(enter=Да/N=Нет)?", file_name.c_str());
 		while ((BUFFER[0] = getchar()) != EOF) {
             if (BUFFER[0] == '\n') {
+				printf("Продолжаем запись сведений после существующих.");
                 file_info.second = "a";
                 break;
             } else {
 				__fpurge(stdin);
 				if (BUFFER[0] == 'n' || BUFFER[0] == 'N') {
+					printf("Заполняем файл %s сведениями с нуля.", file_name.c_str());
 					file_info.second = "w";
 					break;
 				} else {
@@ -258,6 +263,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
 			printf("\nВведите поле %s:\n", field_names_1[field_index].c_str());
 		else if (option == 2)
 			printf("\nВведите поле %s:\n", field_names_2[field_index].c_str());
+		memset(BUFFER, 0x00, BUF_SIZE);
 	}
     fclose(file);
     clearerr(stdin); // Здесь происходит очистка потока ввода от EOF
