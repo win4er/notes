@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <clocale>
 #include <filesystem>
 #include <regex>
 #include <string>

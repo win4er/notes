@@ -26,7 +26,6 @@ bool validate_surname(const std::string& surname) {
 bool validate_address(const std::string& address) {
     return std::regex_match(address, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9_. ]+$"));
 }
-
 bool validate_release_year(const std::string& release_year) {
     static size_t lower_bound_year = 1960;
     std::time_t t = std::time(nullptr);
