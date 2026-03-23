@@ -5,9 +5,11 @@ int main() {
     setlocale(LC_ALL, "ru_RU.UTF-8");
     
     printf("═══════════════════════════════════\n");
-    printf("   ПРОГРАММА ДЛЯ СОЗДАНИЯ ФАЙЛОВ  \n");
+    printf("   ПРОГРАММА ДЛЯ СОЗДАНИЯ ФАЙЛОВ   \n");
+    printf("   ВСЕ ФАЙЛЫ СОХРАНЯЮТСЯ ЗДЕСЬ     \n");
+	printf("   (в папке, вместе с file_h)      \n");
     printf("═══════════════════════════════════\n\n");
-    
+	 
     const size_t BUF_SIZE = 512;
     char BUFFER[BUF_SIZE];
 
@@ -33,8 +35,7 @@ int main() {
             printf("\n═══════════════════════════════════\n");
             printf("   %s\n", BUFFER[0] == '1' ? "АВТОМОБИЛЬНЫЕ ДАННЫЕ" : "РЕГИСТРАЦИОННЫЕ ДАННЫЕ");
             printf("═══════════════════════════════════\n");
-            printf("* 'q' - выход из ввода\n");
-            printf("* 'menu' - возврат в меню\n\n");
+            printf("* 'q' - возвращение в меню\n");
             fflush(stdout);
             
             write_data(BUFFER, BUF_SIZE, BUFFER[0] - '0');

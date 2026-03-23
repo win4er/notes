@@ -454,8 +454,7 @@
   ═══════════════════════════════════\
      АВТОМОБИЛЬНЫЕ ДАННЫЕ\
   ═══════════════════════════════════\
-  * 'q' - выход из ввода\
-  * 'menu' - возврат в меню\
+  `*` 'q' - выход из ввода\
   \
   Введите название файла (Enter='car_data.txt', 'q'=меню): \
 ]
@@ -471,8 +470,7 @@
   ═══════════════════════════════════\
               ВВОД ДАННЫХ\
   ═══════════════════════════════════\
-  * 'q' - завершить ввод и сохранить\
-  * 'menu' - вернуться в меню (без сохранения текущей записи)\
+  `*` 'q' - завершить ввод и сохранить файл, а затем вернуться в меню\
   ═══════════════════════════════════\
   \
   --- Поле 1/3: МАРКА автомобиля ---\
@@ -501,7 +499,7 @@
   Попробуйте еще раз или введите 'q' для выхода.\
   \
   --- Поле 1/3: МАРКА автомобиля ---\
-     Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), воскл.знак(!)\
+     Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.)\
   > \
 ]
 
@@ -513,7 +511,7 @@
   Поле принято\
   \
   --- Поле 2/3: МОДЕЛЬ автомобиля ---\
-     Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(`_`), точка(.), воскл.знак(!), скобки()\
+     Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(`_`), точка(.) скобки()\
   > \
 ]
 
@@ -521,7 +519,7 @@
 
 #rect()[
   --- Поле 3/3: НОМЕРНОЙ ЗНАК ---\
-     Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X)\
+     Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X) или дефисы и пробелы\
   > \
 ]
 
@@ -537,7 +535,7 @@
   ──────────────────────────────────\
   \
   --- Поле 1/3: МАРКА автомобиля ---\
-     Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(`_`), точка(.), воскл.знак(!)\
+     Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(`_`), точка(.)\
   > \
 ]
 
@@ -578,12 +576,15 @@
 файл main.cpp:
 ```cpp
 #include "file_handler.hpp"
+#include <clocale>
 
 int main() {
     setlocale(LC_ALL, "ru_RU.UTF-8");
     
     printf("═══════════════════════════════════\n");
-    printf("   ПРОГРАММА ДЛЯ СОЗДАНИЯ ФАЙЛОВ  \n");
+    printf("   ПРОГРАММА ДЛЯ СОЗДАНИЯ ФАЙЛОВ   \n");
+    printf("   ВСЕ ФАЙЛЫ СОХРАНЯЮТСЯ ЗДЕСЬ     \n");
+    printf("   (в папке, вместе с file_h)      \n");
     printf("═══════════════════════════════════\n\n");
     
     const size_t BUF_SIZE = 512;
@@ -611,8 +612,7 @@ int main() {
             printf("\n═══════════════════════════════════\n");
             printf("   %s\n", BUFFER[0] == '1' ? "АВТОМОБИЛЬНЫЕ ДАННЫЕ" : "РЕГИСТРАЦИОННЫЕ ДАННЫЕ");
             printf("═══════════════════════════════════\n");
-            printf("* 'q' - выход из ввода\n");
-            printf("* 'menu' - возврат в меню\n\n");
+            printf("* 'q' - возвращение в меню\n");
             fflush(stdout);
             
             write_data(BUFFER, BUF_SIZE, BUFFER[0] - '0');
@@ -648,107 +648,87 @@ int main() {
 
 файл file_handler.hpp
 ```cpp
-#include "file_handler.hpp"
+#ifndef FILE_HANDLER_HPP
+#define FILE_HANDLER_HPP
 
-int main() {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
-    
-    printf("═══════════════════════════════════\n");
-    printf("   ПРОГРАММА ДЛЯ СОЗДАНИЯ ФАЙЛОВ  \n");
-    printf("═══════════════════════════════════\n\n");
-    
-    const size_t BUF_SIZE = 512;
-    char BUFFER[BUF_SIZE];
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <clocale>
+#include <filesystem>
+#include <regex>
+#include <string>
+#include <ctime>
+#include <cctype>
+#include <stdio_ext.h>
 
-	printf("\n");
-    printf("┌─────────────────────────────┐\n");
-    printf("│         ГЛАВНОЕ МЕНЮ        │\n");
-    printf("├─────────────────────────────┤\n");
-    printf("│ 1) Автомобильные данные     │\n");
-    printf("│ 2) Регистрационные данные   │\n");
-    printf("│ q) Выход                    │\n");
-    printf("└─────────────────────────────┘\n");
-    printf("Выбор: ");
-    fflush(stdout);
-    
-    while (fgets(BUFFER, BUF_SIZE, stdin) != nullptr) {
-        __fpurge(stdin);
-        BUFFER[strcspn(BUFFER, "\n")] = 0;
-        
-        if (BUFFER[0] == 'q' || BUFFER[0] == 'Q') {
-            break;
-        }
-        else if (BUFFER[0] == '1' || BUFFER[0] == '2') {
-            printf("\n═══════════════════════════════════\n");
-            printf("   %s\n", BUFFER[0] == '1' ? "АВТОМОБИЛЬНЫЕ ДАННЫЕ" : "РЕГИСТРАЦИОННЫЕ ДАННЫЕ");
-            printf("═══════════════════════════════════\n");
-            printf("* 'q' - выход из ввода\n");
-            printf("* 'menu' - возврат в меню\n\n");
-            fflush(stdout);
-            
-            write_data(BUFFER, BUF_SIZE, BUFFER[0] - '0');
-            __fpurge(stdin);
-            
-            printf("\nНажмите Enter...");
-            fflush(stdout);
-            getchar();
-            __fpurge(stdin);
-        }
-        else {
-            printf("Ошибка: введите 1, 2 или q\n");
-            fflush(stdout);
-        }
-        
-		printf("\n");
-        printf("┌─────────────────────────────┐\n");
-        printf("│         ГЛАВНОЕ МЕНЮ        │\n");
-        printf("├─────────────────────────────┤\n");
-        printf("│ 1) Автомобильные данные     │\n");
-        printf("│ 2) Регистрационные данные   │\n");
-        printf("│ q) Выход                    │\n");
-        printf("└─────────────────────────────┘\n");
-        printf("Выбор: ");
-        fflush(stdout);
-    }
-    
-    printf("\nПрограмма завершена.\n");
-    fflush(stdout);
-    return 0;
-}
+struct CarData {
+    std::string license;
+    std::string brand;
+    std::string model;
+};
+
+struct LicenseData {
+    std::string license;
+    std::string surname;
+    std::string address;
+    std::string release_year;
+};
+
+bool validate_filename(const std::string& filename);
+bool validate_license(const std::string& license);
+bool validate_brand(const std::string& brand);
+bool validate_model(const std::string& model);
+bool validate_surname(const std::string& surname);
+bool validate_address(const std::string& address);
+bool validate_release_year(const std::string& release_year);
+
+std::pair<std::string, std::string> file_info(
+    char* buffer,
+    const size_t& buf_size,
+    const std::string& default_filename
+);
+void write_data(char* buffer, const size_t& buf_size, const size_t& option);
+
+#endif
 ```
 
 файл file_handler.cpp:
 ```cpp
-
 #include "file_handler.hpp"
 
 const std::string DEFAULT_FILENAME_1 = "car_data.txt";
 const std::string DEFAULT_FILENAME_2 = "license_data.txt";
 
 bool validate_filename(const std::string& filename) {
-    return std::regex_match(filename, std::regex("^[a-zA-Z0-9_-]+\\.txt$"));
+    return std::regex_match(filename, std::regex("[a-zA-Z0-9_-]+\\.txt$"));
 }
 
 bool validate_license(const std::string& license) {
-    return std::regex_match(license, std::regex("^[ABEKMHOPCTYX][0-9]{3}[ABEKMHOPCTYX]{2}[0-9]{2,3}RUS$"));
+    bool cond1 = std::regex_match(license, std::regex("[ABEKMHOPCTYX][0-9]{3}[ABEKMHOPCTYX]{2}[0-9]{2,3}RUS$"));
+    bool cond2 = std::regex_match(license, std::regex("[- ]+$"));
+	return cond1 || cond2;
 }
 
 bool validate_brand(const std::string& brand) {
-    return std::regex_match(brand, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.! ]+$"));
+    return std::regex_match(brand, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_. -]+$"));
 }
 
 bool validate_model(const std::string& model) {
-    return std::regex_match(model, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.!() ]+$"));
+    return std::regex_match(model, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.() -]+$"));
 }
 
 bool validate_surname(const std::string& surname) {
-    return std::regex_match(surname, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z]+$"));
+    return std::regex_match(surname, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z -]+$"));
 }
 
 bool validate_address(const std::string& address) {
-    return std::regex_match(address, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9_. ]+$"));
+    return std::regex_match(address, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9_., -]+$"));
 }
 bool validate_release_year(const std::string& release_year) {
+	if (std::regex_match(release_year, std::regex("[ -]+$"))) {
+		return true;
+	}
     static size_t lower_bound_year = 1960;
     std::time_t t = std::time(nullptr);
     std::tm *const pTInfo = std::localtime(&t);
@@ -759,6 +739,12 @@ bool validate_release_year(const std::string& release_year) {
         return false;
     }
     
+    // Проверка длины строки (год не может быть длиннее 4 цифр)
+    if (release_year.length() > 4) {
+        printf("Ошибка: год должен состоять из 4 цифр (например: 2015).\n");
+        return false;
+    }
+    
     for (char c : release_year) {
         if (!isdigit(c)) {
             printf("Ошибка: год должен состоять только из цифр (например: 2015).\n");
@@ -766,19 +752,29 @@ bool validate_release_year(const std::string& release_year) {
         }
     }
     
-    int year = std::stoi(release_year);
+    // Безопасное преобразование с обработкой исключения
+    int year = 0;
+    try {
+        year = std::stoi(release_year);
+    } catch (const std::out_of_range&) {
+        printf("Ошибка: введенное значение слишком большое.\n");
+        return false;
+    } catch (const std::invalid_argument&) {
+        printf("Ошибка: неверный формат года.\n");
+        return false;
+    }
+    
     if (year < lower_bound_year) {
         printf("Ошибка: год выпуска не может быть раньше %zu года.\n", lower_bound_year);
         return false;
     }
     if (year > current_year) {
         printf("Ошибка: год выпуска не может быть позже текущего (%zu).\n", current_year);
-        return false;
+        return falhttps://drive.google.com/drive/folders/1fcligFqWK2fepW9n87mDjUnW_D3SzyZM?usp=drive_linkse;
     }
     
     return true;
 }
-
 std::pair<std::string, std::string> file_info(
     char* BUFFER, 
     const size_t& BUF_SIZE, 
@@ -881,8 +877,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     printf("═══════════════════════════════════════\n");
     printf("            ВВОД ДАННЫХ\n");
     printf("═══════════════════════════════════════\n");
-    printf("* 'q' - завершить ввод и сохранить\n");
-    printf("* 'menu' - вернуться в меню (без сохранения текущей записи)\n");
+    printf("* 'q' - завершить ввод и сохранить файл, а затем вернуться в меню\n");
     printf("═══════════════════════════════════════\n");
     fflush(stdout);
     
@@ -896,9 +891,9 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     };
     
     const std::string field_hints_1[3] = {
-        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), воскл.знак(!)",
-        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), воскл.знак(!), скобки()",
-        "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X)"
+        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.)",
+        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), скобки()",
+        "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X) или дефисы и пробелы"
     };
     
     const std::string field_names_2[4] = {
@@ -910,9 +905,9 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     
     const std::string field_hints_2[4] = {
         "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X)",
-        "Только буквы (русские/английские), дефис для двойных фамилий",
+        "Разрешены: буквы (русские/английские), дефис для двойных фамилий и пробел",
         "Разрешены: буквы, цифры, пробел, точка(.), запятая(,), дефис(-), подчеркивание(_)",
-        "Четыре цифры от 1960 до текущего года"
+        "Четыре цифры от 1960 до текущего года, а также дефис(-) и пробел"
     };
     
     CarData temp_1;
@@ -1138,10 +1133,10 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
   *Тест 3. Просмотр содержимого car_data.txt*\
   \
   После завершения работы программы содержимое файла car_data.txt:\
-  ```\
-  Toyota Camry A123BC77RUS\
-  BMW X5 B456KM99RUS\
-  Lada Vesta C789OP123RUS\
+  ```
+  Toyota Camry A123BC77RUS
+  BMW X5 B456KM99RUS
+  Lada Vesta C789OP123RUS
   ```\
   \
   Информация успешно записана в файл без каких-либо проблем.
@@ -1223,11 +1218,11 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
   *Тест 8. Просмотр содержимого license_data.txt*\
   \
   После завершения работы программы содержимое файла license_data.txt:\
-  ```\
-  A123BC77RUS Иванов г. Москва, ул. Тверская, д.10 2020\
-  B456KM99RUS Петров г. Санкт-Петербург, Невский пр., д.25 2018\
-  C789OP123RUS Сидоров г. Казань, ул. Баумана, д.5 2022\
-  D321XY77RUS Кузнецов г. Екатеринбург, ул. Ленина, д.15 2021\
+  ```
+  A123BC77RUS Иванов г. Москва, ул. Тверская, д.10 2020
+  B456KM99RUS Петров г. Санкт-Петербург, Невский пр., д.25 2018
+  C789OP123RUS Сидоров г. Казань, ул. Баумана, д.5 2022
+  D321XY77RUS Кузнецов г. Екатеринбург, ул. Ленина, д.15 2021
   ```\
   \
   Информация успешно записана и дописана в файл.

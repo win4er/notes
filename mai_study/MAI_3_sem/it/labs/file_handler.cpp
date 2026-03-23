@@ -4,29 +4,34 @@ const std::string DEFAULT_FILENAME_1 = "car_data.txt";
 const std::string DEFAULT_FILENAME_2 = "license_data.txt";
 
 bool validate_filename(const std::string& filename) {
-    return std::regex_match(filename, std::regex("^[a-zA-Z0-9_-]+\\.txt$"));
+    return std::regex_match(filename, std::regex("[a-zA-Z0-9_-]+\\.txt$"));
 }
 
 bool validate_license(const std::string& license) {
-    return std::regex_match(license, std::regex("^[ABEKMHOPCTYX][0-9]{3}[ABEKMHOPCTYX]{2}[0-9]{2,3}RUS$"));
+    bool cond1 = std::regex_match(license, std::regex("[ABEKMHOPCTYX][0-9]{3}[ABEKMHOPCTYX]{2}[0-9]{2,3}RUS$"));
+    bool cond2 = std::regex_match(license, std::regex("[- ]+$"));
+	return cond1 || cond2;
 }
 
 bool validate_brand(const std::string& brand) {
-    return std::regex_match(brand, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.! ]+$"));
+    return std::regex_match(brand, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_. -]+$"));
 }
 
 bool validate_model(const std::string& model) {
-    return std::regex_match(model, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.!() ]+$"));
+    return std::regex_match(model, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9-_.() -]+$"));
 }
 
 bool validate_surname(const std::string& surname) {
-    return std::regex_match(surname, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z]+$"));
+    return std::regex_match(surname, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z -]+$"));
 }
 
 bool validate_address(const std::string& address) {
-    return std::regex_match(address, std::regex("^[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9_. ]+$"));
+    return std::regex_match(address, std::regex("[ФфРрТтУуХхЦцЧчШшЩщЪъЬьЭэЮюЁёЫыА-Яа-яA-Za-z0-9_., -]+$"));
 }
 bool validate_release_year(const std::string& release_year) {
+	if (std::regex_match(release_year, std::regex("[ -]+$"))) {
+		return true;
+	}
     static size_t lower_bound_year = 1960;
     std::time_t t = std::time(nullptr);
     std::tm *const pTInfo = std::localtime(&t);
@@ -37,6 +42,12 @@ bool validate_release_year(const std::string& release_year) {
         return false;
     }
     
+    // Проверка длины строки (год не может быть длиннее 4 цифр)
+    if (release_year.length() > 4) {
+        printf("Ошибка: год должен состоять из 4 цифр (например: 2015).\n");
+        return false;
+    }
+    
     for (char c : release_year) {
         if (!isdigit(c)) {
             printf("Ошибка: год должен состоять только из цифр (например: 2015).\n");
@@ -44,7 +55,18 @@ bool validate_release_year(const std::string& release_year) {
         }
     }
     
-    int year = std::stoi(release_year);
+    // Безопасное преобразование с обработкой исключения
+    int year = 0;
+    try {
+        year = std::stoi(release_year);
+    } catch (const std::out_of_range&) {
+        printf("Ошибка: введенное значение слишком большое.\n");
+        return false;
+    } catch (const std::invalid_argument&) {
+        printf("Ошибка: неверный формат года.\n");
+        return false;
+    }
+    
     if (year < lower_bound_year) {
         printf("Ошибка: год выпуска не может быть раньше %zu года.\n", lower_bound_year);
         return false;
@@ -56,7 +78,6 @@ bool validate_release_year(const std::string& release_year) {
     
     return true;
 }
-
 std::pair<std::string, std::string> file_info(
     char* BUFFER, 
     const size_t& BUF_SIZE, 
@@ -159,8 +180,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     printf("═══════════════════════════════════════\n");
     printf("            ВВОД ДАННЫХ\n");
     printf("═══════════════════════════════════════\n");
-    printf("* 'q' - завершить ввод и сохранить\n");
-    printf("* 'menu' - вернуться в меню (без сохранения текущей записи)\n");
+    printf("* 'q' - завершить ввод и сохранить файл, а затем вернуться в меню\n");
     printf("═══════════════════════════════════════\n");
     fflush(stdout);
     
@@ -174,9 +194,9 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     };
     
     const std::string field_hints_1[3] = {
-        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), воскл.знак(!)",
-        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), воскл.знак(!), скобки()",
-        "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X)"
+        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.)",
+        "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), скобки()",
+        "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X) или дефисы и пробелы"
     };
     
     const std::string field_names_2[4] = {
@@ -188,9 +208,9 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     
     const std::string field_hints_2[4] = {
         "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X)",
-        "Только буквы (русские/английские), дефис для двойных фамилий",
+        "Разрешены: буквы (русские/английские), дефис для двойных фамилий и пробел",
         "Разрешены: буквы, цифры, пробел, точка(.), запятая(,), дефис(-), подчеркивание(_)",
-        "Четыре цифры от 1960 до текущего года"
+        "Четыре цифры от 1960 до текущего года, а также дефис(-) и пробел"
     };
     
     CarData temp_1;
