@@ -12,19 +12,21 @@
 #include <cctype>
 #include <stdio_ext.h>
 
+// Объявляем структуры
 struct CarData {
-    std::string license;
-    std::string brand;
-    std::string model;
+    std::string license;		// номерной знак
+    std::string brand;			// марка автомобиля
+    std::string model;			// модель автомобиля
 };
 
 struct LicenseData {
-    std::string license;
-    std::string surname;
-    std::string address;
-    std::string release_year;
+    std::string license;		// номерной знак
+    std::string surname;		// фамилия владельца
+    std::string address;		// адрес владельца
+    std::string release_year;	// год выпуска авто
 };
 
+// прототипы функций
 bool validate_filename(const std::string& filename);
 bool validate_license(const std::string& license);
 bool validate_brand(const std::string& brand);

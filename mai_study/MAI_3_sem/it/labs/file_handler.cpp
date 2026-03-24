@@ -1,8 +1,10 @@
 #include "file_handler.hpp"
 
+// Объявляем стандартные имена файлов
 const std::string DEFAULT_FILENAME_1 = "car_data.txt";
 const std::string DEFAULT_FILENAME_2 = "license_data.txt";
 
+// Ниже представлены реализации функций валидаторов
 bool validate_filename(const std::string& filename) {
     return std::regex_match(filename, std::regex("[a-zA-Z0-9_-]+\\.txt$"));
 }
@@ -78,6 +80,8 @@ bool validate_release_year(const std::string& release_year) {
     
     return true;
 }
+
+// Функция для выбора режима работы с файлом.
 std::pair<std::string, std::string> file_info(
     char* BUFFER, 
     const size_t& BUF_SIZE, 
@@ -154,6 +158,7 @@ std::pair<std::string, std::string> file_info(
     return result;
 }
 
+// Функция записи данных в файл
 void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     std::pair<std::string, std::string> file_information;
     
@@ -176,6 +181,8 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
         return;
     }
     
+	// Выводим пользователю информацию об успешном открытии и знакомим
+	// его с взаимодействием
     printf("\nФайл '%s' успешно открыт\n", file_information.first.c_str());
     printf("═══════════════════════════════════════\n");
     printf("            ВВОД ДАННЫХ\n");
@@ -187,18 +194,21 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     int field_index = 0;
     int note_number = 0;
     
+	// Задаем массив имен полей CarData
     const std::string field_names_1[3] = {
         "МАРКА автомобиля",
         "МОДЕЛЬ автомобиля",
         "НОМЕРНОЙ ЗНАК"
     };
     
+	// Задаем массив советов по заполнению полей CarData
     const std::string field_hints_1[3] = {
         "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.)",
         "Разрешены: русские/английские буквы, цифры, пробел, дефис(-), подчеркивание(_), точка(.), скобки()",
         "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X) или дефисы и пробелы"
     };
     
+	// Задаем массив имен полей LicenseData
     const std::string field_names_2[4] = {
         "НОМЕРНОЙ ЗНАК",
         "ФАМИЛИЯ владельца",
@@ -206,6 +216,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
         "ГОД ВЫПУСКА"
     };
     
+	// Задаем массив советов по заполнению полей LicenseData
     const std::string field_hints_2[4] = {
         "Формат: A999AA99RUS или A999AA999RUS (где A - одна из букв: A, B, E, K, M, H, O, P, C, T, Y, X)",
         "Разрешены: буквы (русские/английские), дефис для двойных фамилий и пробел",
@@ -213,6 +224,7 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
         "Четыре цифры от 1960 до текущего года, а также дефис(-) и пробел"
     };
     
+	// Объявляем переменные куда будем первоначально записывать данные
     CarData temp_1;
     LicenseData temp_2;
     
@@ -225,7 +237,8 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
     }
     printf("> ");
     fflush(stdout);
-    
+   
+	// Начинаем работу по заполнению файла
     while (fgets(BUFFER, BUF_SIZE, stdin) != nullptr) {
         __fpurge(stdin);
         BUFFER[strcspn(BUFFER, "\n")] = 0;
@@ -234,13 +247,6 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
         if (input == "q" || input == "Q") {
             printf("\nВвод завершен. Сохраняем данные...\n");
             break;
-        }
-        
-        if (input == "menu" || input == "MENU") {
-            fclose(file);
-            printf("Возврат в главное меню (текущая запись не сохранена)\n");
-            fflush(stdout);
-            return;
         }
         
         if (input.empty()) {
@@ -375,8 +381,10 @@ void write_data(char* BUFFER, const size_t& BUF_SIZE, const size_t& option) {
         printf("> ");
         fflush(stdout);
     }
-    
+
     fclose(file);
+
+	// Выводим информацию по кол-ву заполненных записей.
     printf("\n═══════════════════════════════════════\n");
     printf("РАБОТА ЗАВЕРШЕНА\n");
     printf("Файл: %s\n", file_information.first.c_str());
